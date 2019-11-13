@@ -10,6 +10,7 @@ class Header extends Component {
           blind={this.props.blind}
           query={this.props.query}
           onChange={this.props.onChange}
+          onClick={this.props.onClick}
         />
       </div>
     );

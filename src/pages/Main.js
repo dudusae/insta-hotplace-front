@@ -12,8 +12,9 @@ class Main extends Component {
           blind={this.props.blind}
           query={this.props.query}
           onChange={this.props.onChange}
+          onClick={this.props.onClick}
         />
-        <Route path="/search/:query" render={()=>(<SearchResult keyword={this.props.query}/>)} />
+        <Route path="/search/:query" render={()=>(<SearchResult keyword={this.props.query} submitCheck={this.props.submitCheck}/>)} />
         <Route path="/detail" component={Detail} />
       </Router>
     );

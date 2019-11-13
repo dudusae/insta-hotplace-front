@@ -8,8 +8,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
       query: '',
+      submit: false,
     };
   }
 
@@ -18,6 +18,9 @@ class App extends Component {
     this.setState({ query: e.target.value });
     console.log(this.state.query);
   };
+  submitHandle = () => {
+    this.setState({ submit: !this.state.submit });
+  }
 
   render() {
     return (
@@ -41,6 +44,8 @@ class App extends Component {
                 blind={this.props.blind}
                 query={this.state.query}
                 onChange={this.queryHandle}
+                onClick={this.submitHandle}
+                submitCheck={this.state.submit}
               />
             )}
           />

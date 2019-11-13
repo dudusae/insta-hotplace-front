@@ -34,13 +34,12 @@ class SearchResult extends Component {
   // render()다음 데이터를 호출한다
   componentDidMount() {
     this.fetchSearch(this.props.match.params.query);
-    
     window.addEventListener('scroll', this.nextPage);
   }
 
+
+  // 업데이트 될 때 실행됨
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log('nextProps:' + nextProps.keyword);
-    console.log('prevState:' + prevState.keyword);
     if (nextProps.keyword !== prevState.keyword) {
       return { keyword: nextProps.keyword };
     }
@@ -48,7 +47,7 @@ class SearchResult extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.keyword!==this.props.keyword){
+    if(prevProps.submitCheck!==this.props.submitCheck){
       this.fetchSearch(this.props.keyword);
     }
   }
@@ -61,13 +60,13 @@ class SearchResult extends Component {
     }
   };
 
-
   viewDetail = (e, num) => {
     e.preventDefault();
     this.props.history.push(`/detail/${num}`);
   };
+
+  
   render() {
-    console.log('SearchResult>render>KeywordState:' + this.state.keyword);
     var {
       searchCount,
       searchList,

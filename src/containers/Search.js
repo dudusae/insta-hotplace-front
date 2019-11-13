@@ -18,7 +18,7 @@ class Search extends Component {
             value={this.props.query}
             onChange={this.props.onChange}
           />
-          <button type="submit">Submit</button>
+          <button type="submit" onClick={this.props.onClick}>Submit</button>
         </form>
       </div>
     );
