@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 
 
 
-class Subject extends Component {
+class SearchResultNone extends Component {
     render(){
         return ( 
-
+<div>없다</div>
         );}}
 
 
 
 
 
-export default App;
+export default SearchResultNone;

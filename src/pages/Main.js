@@ -13,7 +13,7 @@ class Main extends Component {
           query={this.props.query}
           onChange={this.props.onChange}
         />
-        <Route path="/search" component={SearchResult} />
+        <Route path="/search/:query" render={()=>(<SearchResult keyword={this.props.query}/>)} />
         <Route path="/detail" component={Detail} />
       </Router>
     );
