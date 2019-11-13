@@ -19,6 +19,11 @@ class App extends Component {
   queryHandle = e => {
     this.setState({ query: e.target.value });
   };
+
+  inputClearHandle = () => {
+    this.setState({ query: '' });
+  };
+
   submitHandle = e => {
     e.preventDefault();
     this.setState({ submit: !this.state.submit });
@@ -32,7 +37,7 @@ class App extends Component {
             exact
             path="/"
             render={() => (
-              <Intro query={this.state.query} onChange={this.queryHandle} />
+              <Intro query={this.state.query} onChange={this.queryHandle}  inputClear={this.inputClearHandle}/>
             )}
           />
           <Route
@@ -43,6 +48,7 @@ class App extends Component {
                 onChange={this.queryHandle}
                 onClick={this.submitHandle}
                 submitCheck={this.state.submit}
+                inputClear={this.inputClearHandle}
               />
             )}
           />

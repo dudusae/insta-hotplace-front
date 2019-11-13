@@ -74,12 +74,14 @@ class SearchResult extends Component {
       // 검색결과가 있으면 로드한 데이터를 12개씩 보여준다
       var indexEnd = itemsPerPage * loadPage;
       var searchListSlice = searchList.slice(indexStart, indexEnd);
+
+      // 데이터를 불러와 카드레이아웃으로 보여준다
       var boxItems = searchListSlice.map((searchList, i) => {
         return (
           <BoxItem
             searchList={searchList}
             key={i}
-            onClick={e => {this.viewDetail(e, 1);}}
+            onClick={e => {this.viewDetail(e, searchList.name);}}
           />
         );
       });

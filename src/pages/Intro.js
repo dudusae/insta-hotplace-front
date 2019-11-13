@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from './../components/Header';
+import Header from './../containers/Header';
 import Search from './../containers/Search';
 
 class Intro extends Component {
@@ -16,7 +16,7 @@ class Intro extends Component {
               </span>
               <span className="key_color">핫한</span> 맛집은?
             </h1>
-            <Search query={this.props.query} onChange={this.props.onChange} />
+            <Search query={this.props.query} onChange={this.props.onChange} inputClear={this.props.inputClear}/>
             <div className="home_ico"></div>
           </main>
         </div>

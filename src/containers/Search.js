@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SearchInput, SearchBtn } from './../components/SearchParts';
+import { SearchInput, SearchBtn, SearchClearBtn } from './../components/SearchField';
 import { withRouter } from 'react-router-dom';
 
 class Search extends Component {
@@ -36,6 +36,7 @@ class Search extends Component {
               query={this.props.query}
               onChange={this.props.onChange}
             />
+            <SearchClearBtn onClick={this.props.inputClear}/>
             <div className="search_fixed_text">
               <span>맛집 |</span>
             </div>

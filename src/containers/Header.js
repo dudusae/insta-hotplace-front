@@ -1,5 +1,5 @@
 import React from 'react';
-import Search from './../containers/Search';
+import Search from './Search';
 
 function Header(props) {
   return (
@@ -17,6 +17,7 @@ function Header(props) {
           query={props.query}
           onChange={props.onChange}
           onClick={props.onClick}
+          inputClear={props.inputClear}
         />
       </header>
     </div>
