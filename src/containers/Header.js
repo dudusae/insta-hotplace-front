@@ -16,7 +16,6 @@ function Header(props) {
           blind={props.blind}
           query={props.query}
           onChange={props.onChange}
-          querySubmit={props.querySubmit}
           inputClear={props.inputClear}
         />
       </header>

@@ -10,13 +10,11 @@ function Main(props) {
       <Header
         query={props.query}
         onChange={props.onChange}
-        querySubmit={props.querySubmit}
         inputClear={props.inputClear}
       />
       <Route path="/search/:query" render={() => (
                                           <SearchResult
-                                              keyword={props.query}
-                                              querySubmitState={props.querySubmitState} />
+                                              keyword={props.query}/>
         )}
       />
       <Route path="/detail" component={Detail} />
