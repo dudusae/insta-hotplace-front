@@ -1,20 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Search from './../containers/Search';
 
-class Header extends Component {
-  render() {
-    return (
-      <div>
-        <a href="/"><span>Header</span></a>
+function Header(props) {
+  return (
+    <div className="header_container fullwidth key_color_bg">
+      <header className="header">
+        <div className='logo_area'>
+          <h1>
+            <a href="/">
+              <span className="logo">핫플검색</span>
+            </a>
+          </h1>
+        </div>
         <Search
-          blind={this.props.blind}
-          query={this.props.query}
-          onChange={this.props.onChange}
-          onClick={this.props.onClick}
+          blind={props.blind}
+          query={props.query}
+          onChange={props.onChange}
+          onClick={props.onClick}
         />
-      </div>
-    );
-  }
+      </header>
+    </div>
+  );
 }
 
 export default Header;

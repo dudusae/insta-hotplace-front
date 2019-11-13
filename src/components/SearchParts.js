@@ -18,7 +18,7 @@ function SearchInput(props) {
 // 검색버튼
 function SearchBtn(props) {
   return (
-    <button type="submit" className='search_btn'>
+    <button type="submit" className='search_btn' onClick={props.onClick}>
       <span className="blind">검색</span>
       <span className='search_btn_ico'></span>
     </button>
