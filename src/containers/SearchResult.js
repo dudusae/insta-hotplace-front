@@ -44,7 +44,7 @@ class SearchResult extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.submitCheck !== this.props.submitCheck) {
+    if (prevProps.querySubmitState !== this.props.querySubmitState) {
       this.fetchSearch(this.props.keyword);
     }
   }

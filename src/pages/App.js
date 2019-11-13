@@ -5,51 +5,49 @@ import Footer from './../components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class App extends Component {
-  // query:검색창입력값,
-  // submit:검색 실행 이벤트를 체크하는 표시자. submit값이 변경되면  변경되면서 데이터를 불러온다.
 
+  // query:검색창입력값,
+  // querySubmit:검색 실행 이벤트를 체크하는 표시자.
   constructor(props) {
     super(props);
     this.state = {
       query: '',
-      submit: false,
+      querySubmit: false,
     };
   }
 
-  queryHandle = e => {
-    this.setState({ query: e.target.value });
-  };
+  // 검색창에 입력한 값을 표시
+  queryHandle = e => {this.setState({ query: e.target.value });};
 
-  inputClearHandle = () => {
-    this.setState({ query: '' });
-  };
+  // 검색창에 입력한 값 지우기
+  queryClearHandle = () => {this.setState({ query: '' });};
 
-  submitHandle = e => {
+  // 검색실행시 표시자 변경(데이터 로드 트리거)
+  querySubmitHandle = e => {
     e.preventDefault();
-    this.setState({ submit: !this.state.submit });
+    this.setState({ querySubmit: !this.state.querySubmit });
   };
 
   render() {
     return (
       <div className="fullheight">
         <Router>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <Intro query={this.state.query} onChange={this.queryHandle}  inputClear={this.inputClearHandle}/>
+          <Route exact path="/" render={() => (
+                                        <Intro
+                                          query={this.state.query}
+                                          onChange={this.queryHandle}
+                                          inputClear={this.queryClearHandle}
+                                        />
             )}
           />
-          <Route
-            path="/search"
-            render={() => (
-              <Main
-                query={this.state.query}
-                onChange={this.queryHandle}
-                onClick={this.submitHandle}
-                submitCheck={this.state.submit}
-                inputClear={this.inputClearHandle}
-              />
+          <Route path="/search" render={() => (
+                                        <Main
+                                          query={this.state.query}
+                                          onChange={this.queryHandle}
+                                          querySubmit={this.querySubmitHandle}
+                                          querySubmitState={this.state.querySubmit}
+                                          inputClear={this.queryClearHandle}
+                                        />
             )}
           />
         </Router>

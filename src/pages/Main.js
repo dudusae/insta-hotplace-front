@@ -10,13 +10,13 @@ function Main(props) {
       <Header
         query={props.query}
         onChange={props.onChange}
-        onClick={props.onClick}
+        querySubmit={props.querySubmit}
         inputClear={props.inputClear}
       />
-      <Route
-        path="/search/:query"
-        render={() => (
-          <SearchResult keyword={props.query} submitCheck={props.submitCheck} />
+      <Route path="/search/:query" render={() => (
+                                          <SearchResult
+                                              keyword={props.query}
+                                              querySubmitState={props.querySubmitState} />
         )}
       />
       <Route path="/detail" component={Detail} />
@@ -25,5 +25,3 @@ function Main(props) {
 }
 
 export default Main;
-
-// export default Main;

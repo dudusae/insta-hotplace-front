@@ -40,7 +40,7 @@ class Search extends Component {
             <div className="search_fixed_text">
               <span>맛집 |</span>
             </div>
-            <SearchBtn onClick={this.props.onClick} />
+            <SearchBtn onClick={this.props.querySubmit} />
           </fieldset>
         </form>
       </div>
