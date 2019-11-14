@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { BoxItem, Loading } from './../components/BoxItems';
 import * as service from './../services/GetSearch';
 
@@ -7,20 +7,28 @@ class SearchResult extends Component {
   // 키워드 검색결과 가져와서 state에 담기
   fetchSearch = async keyword => {
     this.setState({ fetching: true });
-    const searchRequest = await service.getSearch(keyword);
-    const searchList = searchRequest.data;
-    this.setState({
-      searchCount: searchList.length,
-      searchList,
-      fetching: false,
-    });
+    try {
+      const searchRequest = await service.getSearch(keyword);
+      const searchList = searchRequest.data;
+      this.setState({
+        searchCount: searchList.length,
+        searchList,
+        fetching: false,
+      });
+    } catch (e) {
+      this.setState({
+        fetching: false,
+        hasError: true,
+      });
+    }
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      searchCount: null,
       fetching: false,
+      hasError: false,
+      searchCount: null,
       searchList: [],
       itemsPerPage: 12,
       loadPage: 1,
@@ -57,6 +65,7 @@ class SearchResult extends Component {
     }
   };
 
+  // 상세보기로 이동
   viewDetail = (e, num) => {
     e.preventDefault();
     this.props.history.push(`/detail/${num}`);
@@ -64,40 +73,48 @@ class SearchResult extends Component {
 
   render() {
     var {
+      fetching,
+      hasError,
       searchCount,
       searchList,
-      loadPage,
       itemsPerPage,
-      indexStart,
+      loadPage,
+      indexStart
     } = this.state;
 
-      // 검색결과가 있으면 로드한 데이터를 12개씩 보여준다
-      var indexEnd = itemsPerPage * loadPage;
-      var searchListSlice = searchList.slice(indexStart, indexEnd);
-
-      // 데이터를 불러와 카드레이아웃으로 보여준다
-      var boxItems = searchListSlice.map((searchList, i) => {
-        return (
-          <BoxItem
-            searchList={searchList}
-            key={i}
-            onClick={e => {this.viewDetail(e, searchList.name);}}
-          />
-        );
-      });
-
-      return (
-        <div className="main_container fullwidth">
-          <main className="main search_result">
-            <p className="search_count">검색결과 : {searchCount} 건</p>
-            <ul className="box_container">{boxItems}</ul>
-            {/* ajax로 데이터를 가져오는 동안 Loading을 보여준다 */}
-            <Loading blind={this.state.fetching ? '' : 'blind'} />
-          </main>
-        </div>
-      );
+    // 검색결과가 없으면 /sorry 페이지로 이동
+    if (hasError) {
+      return <Redirect to="/sorry" />;
     }
-  }
 
+    // 검색결과가 있으면 로드한 데이터를 12개씩 보여준다
+    var indexEnd = itemsPerPage * loadPage;
+    var searchListSlice = searchList.slice(indexStart, indexEnd);
+
+    // 데이터를 불러와 카드레이아웃으로 보여준다
+    var boxItems = searchListSlice.map((searchList, i) => {
+      return (
+        <BoxItem
+          searchList={searchList}
+          key={i}
+          onClick={e => {
+            this.viewDetail(e, searchList.name);
+          }}
+        />
+      );
+    });
+
+    return (
+      <div className="main_container fullwidth">
+        <main className="main search_result">
+          <p className="search_count">검색결과 : {searchCount} 건</p>
+          <ul className="box_container">{boxItems}</ul>
+          {/* ajax로 데이터를 가져오는 동안 Loading을 보여준다 */}
+          <Loading blind={fetching ? '' : 'blind'} />
+        </main>
+      </div>
+    );
+  }
+}
 
 export default withRouter(SearchResult);

@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './../containers/Header';
 import SearchResult from './../containers/SearchResult';
+import SearchResultNone from './../containers/SearchResultNone';
 import Detail from './../containers/Detail';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -17,6 +18,7 @@ function Main(props) {
                                               keyword={props.query}/>
         )}
       />
+      <Route path="/sorry" component={SearchResultNone} />
       <Route path="/detail" component={Detail} />
     </Router>
   );
