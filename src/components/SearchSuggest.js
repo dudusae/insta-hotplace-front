@@ -12,7 +12,7 @@ function SuggestList(props) {
 function SearchSuggest(props) {
   return (
     <div
-      className={'search_keyword_suggest' + props.classMode + props.blind}
+      className={'search_keyword_suggest' + props.blind}
       onMouseEnter={props.onMouse}
       onMouseLeave={props.onMouse}
     >

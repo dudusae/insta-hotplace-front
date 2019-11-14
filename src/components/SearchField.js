@@ -14,6 +14,8 @@ function SearchField(props) {
           placeholder="강남역"
           value={props.query}
           onChange={props.onChange}
+          onFocus={props.onFocus}
+          onBlur={props.onFocus}
         />
       </span>
       <button
