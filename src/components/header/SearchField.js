@@ -1,5 +1,5 @@
 import React from 'react';
-import './search.css';
+import './header.css';
 
 function SearchField(props) {
   return (

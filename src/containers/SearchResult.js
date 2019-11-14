@@ -20,9 +20,10 @@ class SearchResult extends Component {
         fetching: false,
         hasError: true,
       });
+    } finally {
+      this.setState({ hasError: false });
     }
   };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -79,41 +80,41 @@ class SearchResult extends Component {
       searchList,
       itemsPerPage,
       loadPage,
-      indexStart
+      indexStart,
     } = this.state;
 
     // 검색결과가 없으면 /sorry 페이지로 이동
     if (hasError) {
-      return <Redirect to="/search/sorry" />;
-    }
+      return <Redirect to="/sorry" />;
+    } else {
+      // 검색결과가 있으면 로드한 데이터를 12개씩 보여준다
+      var indexEnd = itemsPerPage * loadPage;
+      var searchListSlice = searchList.slice(indexStart, indexEnd);
 
-    // 검색결과가 있으면 로드한 데이터를 12개씩 보여준다
-    var indexEnd = itemsPerPage * loadPage;
-    var searchListSlice = searchList.slice(indexStart, indexEnd);
+      // 데이터를 불러와 카드레이아웃으로 보여준다
+      var boxItems = searchListSlice.map((searchList, i) => {
+        return (
+          <BoxItem
+            searchList={searchList}
+            key={i}
+            onClick={e => {
+              this.viewDetail(e, searchList.name);
+            }}
+          />
+        );
+      });
 
-    // 데이터를 불러와 카드레이아웃으로 보여준다
-    var boxItems = searchListSlice.map((searchList, i) => {
       return (
-        <BoxItem
-          searchList={searchList}
-          key={i}
-          onClick={e => {
-            this.viewDetail(e, searchList.name);
-          }}
-        />
+        <div className="main_container fullwidth">
+          <main className="main search_result">
+            <p className="search_count">검색결과 : {searchCount} 건</p>
+            <ul className="box_container">{boxItems}</ul>
+            {/* ajax로 데이터를 가져오는 동안 Loading을 보여준다 */}
+            <Loading blind={fetching ? '' : 'blind'} />
+          </main>
+        </div>
       );
-    });
-
-    return (
-      <div className="main_container fullwidth">
-        <main className="main search_result">
-          <p className="search_count">검색결과 : {searchCount} 건</p>
-          <ul className="box_container">{boxItems}</ul>
-          {/* ajax로 데이터를 가져오는 동안 Loading을 보여준다 */}
-          <Loading blind={fetching ? '' : 'blind'} />
-        </main>
-      </div>
-    );
+    }
   }
 }
 

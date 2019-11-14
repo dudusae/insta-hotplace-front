@@ -3,7 +3,7 @@ import Header from './../containers/Header';
 import SearchResult from './../containers/SearchResult';
 import SearchResultNone from './../containers/SearchResultNone';
 import Detail from './../containers/Detail';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route, BrowserRouter as Router} from 'react-router-dom';
 
 function Main(props) {
   return (
@@ -19,7 +19,7 @@ function Main(props) {
                                               keyword={props.query}/>
         )}
       />
-      <Route exact path="/search/sorry" render={() => (
+      <Route exact path="/sorry" render={() => (
                                           <SearchResultNone
                                               query={props.query}
                                               onChange={props.onChange}

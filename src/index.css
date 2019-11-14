@@ -277,9 +277,16 @@ html {
 
 .main_copy {
   font-family: 'Jalnan';
-  font-size: 2rem;
+  font-size: 1.9rem;
   font-weight:400;
-  line-height: 46px;
+  line-height: 2.7rem;
+}
+
+.search_no_msg .main_copy {
+  font-family: 'Jalnan';
+  font-size: 1.5rem;
+  font-weight:400;
+  line-height: 2.2rem;
 }
 
 .home_ico {
@@ -302,56 +309,8 @@ html {
   font-weight:400;
 }
 
-.logo_area {
-  position: absolute;
-  height: 100%;
-  display: block;
-  width: 280px;
-  left: 60px;
-  background-image: url('./asset/images/instagram-brands.png');
-  background-position-y: 38px;
-  background-size: 28px;
-  background-repeat: no-repeat;
-}
-
-.logo_area h1,
-.logo_area a {
-  position: absolute;
-  top: 50%;
-  margin-top: 3px;
-  padding: 0 20px;
-  font-size: 30px;
-  line-height: 30px;
-  color: white;
-  width: 140px;
-}
-
-.logo_area_only {
-  position: relative;
-  margin: 0 auto;
-  height: 100%;
-  display: block;
-  width: 160px;
-  background-image: url('./asset/images/instagram-brands.png');
-  background-position-y: 18px;
-  background-size: 28px;
-  background-repeat: no-repeat;
-}
-
-.logo_area_only h1,
-.logo_area_only a {
-  position: absolute;
-  top: 17%;
-  margin-top: 3px;
-  padding: 0 20px;
-  font-size: 30px;
-  line-height: 30px;
-  color: white;
-  width: 140px;
-}
-
 /* global > header > search field */
-
+/* 
 .search {
   position: relative;
   top: 50%;
@@ -506,7 +465,7 @@ fieldset {
 }
 
 /* search field > when appear in <body> classMode +'_body' (bigger) */
-
+/* 
 .search_body {
   position: relative;
   width: 440px;
@@ -631,7 +590,7 @@ fieldset {
 }
 
 
-}
+} */ */
 
 /* index page */
 

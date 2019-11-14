@@ -6,7 +6,7 @@ class Intro extends Component {
   render() {
     var { query, onChange, inputClear, onClickSgt } = this.props;
     return (
-      <div>
+      <div className="intro">
         <Header blind="blind" />
         <div className="main_container fullwidth key_font">
           <main className="main">

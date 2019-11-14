@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SearchField from './../components/search/SearchField';
+import SearchField from './../components/header/SearchField';
 import { SearchSuggest } from './SearchSuggest';
 import { withRouter } from 'react-router-dom';
 
@@ -51,9 +51,8 @@ class Search extends Component {
     var { blind, query, onChange, inputClear } = this.props;
 
     return (
-      <div className="search">
+      <div className={'search '+blind}>
         <form
-          className={blind}
           onSubmit={this.returnSearch}
           method="get"
           autoComplete="off"

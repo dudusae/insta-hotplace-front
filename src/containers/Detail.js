@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RelatedBoxItem, Loading, InstaBoxItem } from './../components/BoxItems';
+import { Loading, InstaBoxItem } from './../components/BoxItems';
 import { GetDetail, GetSearch, GetInsta } from './../services/GetData';
 
 class Detail extends Component {
@@ -13,7 +13,7 @@ class Detail extends Component {
       ]);
       const detailInfo = detailRequest[0].data;
       const instaList = detailRequest[1].data;
-      const searchList = detailRequest[2].data;
+      // const searchList = detailRequest[2].data;
 
       this.setState({
         detailInfo: detailInfo[0],
