@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SearchInput, SearchBtn, SearchClearBtn } from './../components/SearchField';
+import SearchField from './../components/SearchField';
 import { withRouter } from 'react-router-dom';
 
 class Search extends Component {
@@ -27,21 +27,11 @@ class Search extends Component {
           method="get"
           autoComplete="off"
         >
-          <fieldset>
-            <legend className="blind">검색</legend>
-            <div className="search_sharp">
-              <span>#</span>
-            </div>
-            <SearchInput
-              query={this.props.query}
-              onChange={this.props.onChange}
-            />
-            <SearchClearBtn onClick={this.props.inputClear}/>
-            <div className="search_fixed_text">
-              <span>맛집 |</span>
-            </div>
-            <SearchBtn/>
-          </fieldset>
+          <SearchField 
+          query={this.props.query}
+          onChange={this.props.onChange}
+          inputClear={this.props.inputClear}
+          />
         </form>
       </div>
     );

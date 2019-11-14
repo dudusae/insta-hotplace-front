@@ -864,7 +864,7 @@ fieldset {
 
 @media (min-width: 481px) and (max-width: 900px) {
   .box_item {
-    flex: 0 1 49%;
+    flex: 0 1 48%;
     margin-bottom: 12px;
   }
 }
