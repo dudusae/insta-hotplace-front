@@ -11,3 +11,7 @@ export function GetDetail(keyword) {
     console.log('https://my-json-server.typicode.com/dudusae/demo/' + keyword);
     return axios.get('https://my-json-server.typicode.com/dudusae/demo/' + keyword);}
     
+export function GetInsta(keyword) {
+    console.log('https://my-json-server.typicode.com/dudusae/demo/' + keyword);
+    return axios.get('https://my-json-server.typicode.com/dudusae/demo/' + keyword);}
+        

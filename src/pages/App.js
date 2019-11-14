@@ -34,7 +34,7 @@ class App extends Component {
                                         />
             )}
           />
-          <Route path="/hotpl/" render={() => (
+          <Route path="/search/" render={() => (
                                         <Main
                                           query={this.state.query}
                                           onChange={this.queryHandle}

@@ -1,178 +1,83 @@
 import React, { Component } from 'react';
 import { RelatedBoxItem, Loading, InstaBoxItem } from './../components/BoxItems';
+import { GetDetail, GetSearch, GetInsta } from './../services/GetData';
 
 class Detail extends Component {
+  fetchSearch = async (query, name) => {
+    console.log(this.state.detailInfo);
+    this.setState({ fetching: true });
+      const detailRequest = await Promise.all([
+        GetDetail(name),
+        GetInsta(query),
+        GetSearch(query)
+      ]);
+      const detailInfo = detailRequest[0].data;
+      const instaList = detailRequest[1].data;
+      const searchList = detailRequest[2].data;
+
+      this.setState({
+        detailInfo: detailInfo[0],
+        // searchList,
+        instaList,
+        fetching: false,
+      });
+      console.log(this.state.detailInfo);
+    }
+
   constructor(props) {
     super(props);
     this.state = {
-      searchList: [
-        {
-          rank: 1,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-        {
-          rank: 2,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-        {
-          rank: 3,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-        {
-          rank: 4,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-        {
-          rank: 5,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-        {
-          rank: 6,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-        {
-          rank: 7,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-        {
-          rank: 8,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-        {
-          rank: 9,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-        {
-          rank: 10,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-        {
-          rank: 11,
-          name: '고에몬 강남점',
-          backgroundImage: '/images/sample_image.jpg',
-        },
-      ],
-
-      instaList: [
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통#맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-        {
-          id: '@yeezy',
-          tags:
-            '#평내호평맛집#남양주맛집#호평동맛집#동태탕#먹스타그램#맛스타그램#먹스타그램#맛집#맛집스타그램#먹스타소통',
-          backgroundImage: '/images/sample_image.jpg',
-          link: 'https://www.naver.com/',
-        },
-      ],
+      fetching: false,
+      name: this.props.name,
+      detailInfo: [],
+      // searchList: [],
+      instaList: [],
     };
   }
 
+  // render()다음 데이터를 호출한다
+  componentDidMount() {
+    console.log('이거;'+this.props.match.params.name)
+    console.log('이거;'+this.props.match.params.query)
+    const {query, name} = this.props.match.params;
+    this.fetchSearch(query, name);
+    // window.addEventListener('scroll', this.nextPage);
+  }
+
+  // // 무한스크롤
+  // nextPage = () => {
+  //   var { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+  //   if (scrollHeight === scrollTop + clientHeight) {
+  //     this.setState({ loadPage: this.state.loadPage + 1 });
+  //   }
+  // };
+
+
+
   render() {
-    var relatedBoxItems = this.state.searchList.map((searchList, i) => {
-      return (
-        <RelatedBoxItem
-          rank={searchList.rank}
-          name={searchList.name}
-          backgroundImage={searchList.backgroundImage}
-          key={i}
-          onClick={this.props.onClick}
-        />
-      );
-    });
+
+    // 검색결과가 있으면 로드한 데이터를 12개씩 보여준다
+
+    var {detailInfo, fetching} = this.state;
+    // var relatedBoxItems = this.state.searchList.map((searchList, i) => {
+    //   return (
+    //     <RelatedBoxItem
+    //       rank={searchList.rank}
+    //       name={searchList.name}
+    //       backgroundImage={searchList.backgroundImage}
+    //       key={i}
+    //       onClick={this.props.onClick}
+    //     />
+    //   );
+    // });
 
     var instaBoxItems = this.state.instaList.map((instaList, i) => {
       return (
         <InstaBoxItem
-          id={instaList.id}
           backgroundImage={instaList.backgroundImage}
-          tags={instaList.tags}
+          tags={instaList.desc}
           key={i}
-          link={instaList.link}
+          // link={instaList.link}
         />
       );
     });
@@ -180,10 +85,7 @@ class Detail extends Component {
     return (
       <div className="main_container fullwidth">
         <main className="main">
-          <h2 className="goto_list">
-            <a href="/#">강남역 맛집 검색결과</a>
-          </h2>
-          <div className="related_box_container">
+          {/* <div className="related_box_container">
             <button className="related_prv">
               <span className="blind">이전</span>
             </button>
@@ -193,23 +95,22 @@ class Detail extends Component {
             <button className="related_nxt">
               <span className="blind">다음</span>
             </button>
-          </div>
-          <h1 className="detail_title">쌍둥이네 해물식당</h1>
+          </div> */}
+          <h1 className="detail_title">{detailInfo.name}</h1>
           <div className="deatil">
             <div className="detail_map"></div>
             <div className="detail_desc">
               <p className="detail_txt">
-                송도칼국수와 꼬막비빔밥이 맛있는 송도유원지맛집
+              {detailInfo.desc}
               </p>
               <a className="detail_map_link key_color" href="/#">
                 <p className="detail_txt map_ico">네이버 지도에서 보기</p>
               </a>
             </div>
           </div>
-
-          <h2 className="insta_count">인스타그램 검색결과 : 200건</h2>
+          <h2 className="insta_count">인스타그램 검색결과 : {this.state.instaList.length}건</h2>
           <ul className="box_container">{instaBoxItems}</ul>
-          <Loading />
+          <Loading blind={fetching ? '' : 'blind'} />
         </main>
       </div>
     );

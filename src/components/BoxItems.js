@@ -1,4 +1,5 @@
 import React from 'react';
+import LinesEllipsis from 'react-lines-ellipsis';
 
 // 검색결과 박스 (낱개)
 function BoxItem(props) {
@@ -39,7 +40,7 @@ function RelatedBoxItem(props) {
           </div>
         </div>
         <div className="related_box_txt">
-          <h3 className="related_box_title key_color">{props.name}</h3>
+          <h3 className="related_box_title key_color"><LinesEllipsis text={props.name} maxLine='1' ellipsis='...' trimRight basedOn='letters' /></h3>
         </div>
       </a>
     </li>
@@ -55,7 +56,6 @@ function InstaBoxItem(props) {
           style={{ backgroundImage: `url(${props.backgroundImage})` }}
         ></div>
         <div className="insta_box_txt">
-          <p className="insta_box_id">{props.id}</p>
           <p className="insta_box_tags">{props.tags}</p>
         </div>
       </a>

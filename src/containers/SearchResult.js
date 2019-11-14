@@ -68,7 +68,7 @@ class SearchResult extends Component {
   // 상세보기로 이동
   viewDetail = (e, name) => {
     e.preventDefault();
-    this.props.history.push(`/hotpl/detail/${name}`);
+    this.props.history.push(`/search/${this.props.match.params.query}/${name}`);
   };
 
   render() {
@@ -84,7 +84,7 @@ class SearchResult extends Component {
 
     // 검색결과가 없으면 /sorry 페이지로 이동
     if (hasError) {
-      return <Redirect to="/sorry" />;
+      return <Redirect to="/search/sorry" />;
     }
 
     // 검색결과가 있으면 로드한 데이터를 12개씩 보여준다

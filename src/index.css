@@ -920,7 +920,9 @@ fieldset {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  height: 130px;
+  height: 140px;
+  background-color: #FFEDF0;
+  margin: -12px;
 }
 
 .related_prv,
@@ -996,7 +998,7 @@ fieldset {
 }
 
 .related_box_txt h3 {
-  font-size: 14px;
+  font-size: 12px;
   margin: 6px 0;
 }
 
@@ -1009,7 +1011,7 @@ fieldset {
 }
 
 .detail_title {
-  padding: 70px 0 16px 0;
+  padding: 30px 0 16px 0;
   font-size: 28px;
 }
 
