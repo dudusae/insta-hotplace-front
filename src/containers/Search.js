@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SearchField from './../components/SearchField';
-import { SuggestList, SearchSuggest } from './../components/SearchSuggest';
+import SearchField from './../components/search/SearchField';
+import { SearchSuggest } from './SearchSuggest';
 import { withRouter } from 'react-router-dom';
 
 class Search extends Component {
@@ -16,29 +16,7 @@ class Search extends Component {
     super(props);
     this.suggestHover = false;
     this.state = {
-      inputFocus: false,
-      suggestList: [
-        {
-          url: '?가로수길',
-          name: '가로수길',
-        },
-        {
-          url: '강남역',
-          name: '강남역',
-        },
-        {
-          url: '건대',
-          name: '건대',
-        },
-        {
-          url: '#',
-          name: '경리단길',
-        },
-        {
-          url: '#',
-          name: '광화문',
-        },
-      ],
+      inputFocus: false
     };
   }
 
@@ -46,7 +24,6 @@ class Search extends Component {
   returnSearch = e => {
     e.preventDefault();
     this.setState({ inputFocus: false });
-    console.log(e.target.firstChild.childNodes[2].lastChild.value);
     var keyword = e.target.firstChild.childNodes[2].lastChild.value;
     this.props.history.push(`/search/${keyword}`);
   };
@@ -71,18 +48,6 @@ class Search extends Component {
   };
 
   render() {
-    var suggestList = this.state.suggestList.map((list, i) => {
-      return (
-        <SuggestList
-          name={list.name}
-          key={i}
-          onClick={e => {
-            this.autoComp(e, list.name);
-          }}
-        />
-      );
-    });
-
     var { blind, query, onChange, inputClear } = this.props;
 
     return (
@@ -101,7 +66,7 @@ class Search extends Component {
           />
           <SearchSuggest
             blind={this.state.inputFocus ? '' : ' blind'}
-            list={suggestList}
+            autoComp={this.autoComp}
             onMouse={this.suggestHoverListen}
           />
         </form>

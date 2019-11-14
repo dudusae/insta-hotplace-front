@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import { BoxItem, Loading } from './../components/BoxItems';
-import * as service from './../services/GetSearch';
+import { GetSearch } from './../services/GetData';
 
 class SearchResult extends Component {
   // 키워드 검색결과 가져와서 state에 담기
   fetchSearch = async keyword => {
     this.setState({ fetching: true });
     try {
-      const searchRequest = await service.getSearch(keyword);
+      const searchRequest = await GetSearch(keyword);
       const searchList = searchRequest.data;
       this.setState({
         searchCount: searchList.length,
@@ -66,9 +66,9 @@ class SearchResult extends Component {
   };
 
   // 상세보기로 이동
-  viewDetail = (e, num) => {
+  viewDetail = (e, name) => {
     e.preventDefault();
-    this.props.history.push(`/detail/${num}`);
+    this.props.history.push(`/hotpl/detail/${name}`);
   };
 
   render() {

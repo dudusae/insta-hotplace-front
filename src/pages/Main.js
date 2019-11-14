@@ -14,13 +14,18 @@ function Main(props) {
         inputClear={props.inputClear}
         onClickSgt={props.onClickSgt}
       />
-      <Route path="/search/:query" render={() => (
+      <Route path="/hotpl/search/:query" render={() => (
                                           <SearchResult
                                               keyword={props.query}/>
         )}
       />
-      <Route path="/sorry" component={SearchResultNone} />
-      <Route path="/detail" component={Detail} />
+      <Route path="/hotpl/sorry" render={() => (
+                                          <SearchResultNone
+                                              query={props.query}
+                                              onChange={props.onChange}
+                                              inputClear={props.inputClear}
+                                              onClickSgt={props.onClickSgt}/>)} />
+      <Route path="/hotpl/detail/:name" component={Detail} />
     </Router>
   );
 }

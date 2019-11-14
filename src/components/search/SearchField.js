@@ -30,7 +30,7 @@ function SearchField(props) {
       <div className="search_fixed_text">
         <span>맛집 |</span>
       </div>
-      <button type="submit" className="search_btn" onClick={props.querySubmit}>
+      <button type="submit" className="search_btn" onClick={props.onClick}>
         <span className="blind">검색</span>
         <span className="search_btn_ico"></span>
       </button>

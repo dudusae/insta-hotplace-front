@@ -136,7 +136,7 @@
     overflow: scroll;
   }
   
-  .search_keyword_list a,
+  .search_keyword_list li,
   .search_keyword_subtitle {
     color: #ddd;
   }

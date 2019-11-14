@@ -1,48 +1,15 @@
 import React, { Component } from 'react';
-import { SuggestList, SearchSuggest } from './Search';
+import { SearchSuggest } from './SearchSuggest';
+import { withRouter } from 'react-router-dom';
 
 class SearchResultNone extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      suggestList: [
-        {
-          url: '?가로수길',
-          name: '가로수길',
-        },
-        {
-          url: '강남역',
-          name: '강남역',
-        },
-        {
-          url: '건대',
-          name: '건대',
-        },
-        {
-          url: '#',
-          name: '경리단길',
-        },
-        {
-          url: '#',
-          name: '광화문',
-        },
-      ],
-    };
-  }
-  render() {
-//     var suggestList = this.state.suggestList.map((list, i) => {
-//       return (
-//         <SuggestList
-//           url={list.url}
-//           name={list.name}
-//           key={i}
-//           onClick={e => {
-//             this.autoComp(e, list.name);
-//           }}
-//         />
-//       );
-//     });
+  autoComp = (e, keyword) => {
+    e.preventDefault();
+    this.props.history.push(`/search/${keyword}`);
+    this.props.onClickSgt(keyword);
+  };
 
+  render() {
     return (
       <div className="main_container fullwidth">
         <main className="main search_result">
@@ -53,11 +20,9 @@ class SearchResultNone extends Component {
               <br />
               이런 키워드는 어떠세요?
             </span>
-            {/* <SearchSuggest
-              classMode="_only"
-              blind=""
-              list={suggestList}
-            /> */}
+            <SearchSuggest
+            autoComp={this.autoComp}
+          />
           </div>
         </main>
       </div>
@@ -65,4 +30,4 @@ class SearchResultNone extends Component {
   }
 }
 
-export default SearchResultNone;
+export default withRouter(SearchResultNone);
