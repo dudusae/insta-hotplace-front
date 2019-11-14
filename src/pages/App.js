@@ -18,6 +18,9 @@ class App extends Component {
   // 검색창에 입력한 값 지우기
   queryClearHandle = () => {this.setState({ query: '' });};
 
+  // 키워드 자동완성 
+  onClickSgt = keyword => {this.setState({ query: keyword });};
+
   render() {
     return (
       <div className="fullheight">
@@ -27,6 +30,7 @@ class App extends Component {
                                           query={this.state.query}
                                           onChange={this.queryHandle}
                                           inputClear={this.queryClearHandle}
+                                          onClickSgt={this.onClickSgt}
                                         />
             )}
           />
@@ -35,6 +39,7 @@ class App extends Component {
                                           query={this.state.query}
                                           onChange={this.queryHandle}
                                           inputClear={this.queryClearHandle}
+                                          onClickSgt={this.onClickSgt}
                                         />
             )}
           />

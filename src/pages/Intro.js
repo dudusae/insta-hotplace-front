@@ -4,6 +4,7 @@ import Search from './../containers/Search';
 
 class Intro extends Component {
   render() {
+    var { query, onChange, inputClear, onClickSgt } = this.props;
     return (
       <div>
         <Header blind="blind" />
@@ -16,7 +17,12 @@ class Intro extends Component {
               </span>
               <span className="key_color">핫한</span> 맛집은?
             </h1>
-            <Search query={this.props.query} onChange={this.props.onChange} inputClear={this.props.inputClear}/>
+            <Search
+              query={query}
+              onChange={onChange}
+              inputClear={inputClear}
+              onClickSgt={onClickSgt}
+            />
             <div className="home_ico"></div>
           </main>
         </div>

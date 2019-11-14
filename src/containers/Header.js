@@ -17,6 +17,7 @@ function Header(props) {
           query={props.query}
           onChange={props.onChange}
           inputClear={props.inputClear}
+          onClickSgt={props.onClickSgt}
         />
       </header>
     </div>

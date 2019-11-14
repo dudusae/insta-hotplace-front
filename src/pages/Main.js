@@ -12,6 +12,7 @@ function Main(props) {
         query={props.query}
         onChange={props.onChange}
         inputClear={props.inputClear}
+        onClickSgt={props.onClickSgt}
       />
       <Route path="/search/:query" render={() => (
                                           <SearchResult
