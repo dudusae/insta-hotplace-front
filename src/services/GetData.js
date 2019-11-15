@@ -4,8 +4,8 @@ export function GetSearch(keyword) {
     return axios.get('https://my-json-server.typicode.com/dudusae/demo/' + keyword);}
 
 export function GetSuggestList(keyword) {
-    console.log('http://0.0.0.0:3000/areas');
-    return axios.get('http://0.0.0.0:3000/areas');}
+    console.log('https://my-json-server.typicode.com/dudusae/scc-hotplace/area_list');
+    return axios.get('https://my-json-server.typicode.com/dudusae/scc-hotplace/area_list');}
 
 export function GetDetail(keyword) {
     console.log('https://my-json-server.typicode.com/dudusae/demo/' + keyword);
