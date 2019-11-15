@@ -3,6 +3,13 @@ import { GetSuggestList } from './../services/GetData';
 import { SuggestList, SuggestBox } from './../components/header/SearchSuggest';
 
 class SearchSuggest extends Component {
+  shouldComponentUpdate(newProps) {
+    if (newProps.blind !== 'blind') {
+      return true;
+    }
+    return false;
+  }
+
   fetchSearch = async () => {
     this.setState({ fetching: true });
     const sgtListRequest = await GetSuggestList();
