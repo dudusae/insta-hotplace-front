@@ -88,9 +88,9 @@ class SearchResult extends Component {
   };
 
   // 상세보기로 이동
-  viewDetail = (e, name) => {
+  viewDetail = (e, index) => {
     e.preventDefault();
-    this.props.history.push(`/search/${this.props.match.params.query}/${name}`);
+    this.props.history.push(`/search/${this.props.match.params.query}/${index}`);
   };
 
   render() {
@@ -120,7 +120,8 @@ class SearchResult extends Component {
             searchList={searchList}
             key={i}
             onClick={e => {
-              this.viewDetail(e, searchList.name);
+              // this.viewDetail(e, searchList.name);
+              this.viewDetail(e, i);
             }}
           />
         );
