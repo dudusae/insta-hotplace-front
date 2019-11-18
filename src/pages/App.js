@@ -22,6 +22,7 @@ class App extends Component {
   onClickSgt = keyword => {this.setState({ query: keyword });};
 
   render() {
+    console.log('render (App)');
     return (
       <div className="fullheight">
         <Router>

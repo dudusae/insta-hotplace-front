@@ -3,10 +3,10 @@ import LinesEllipsis from 'react-lines-ellipsis';
 
 // 검색결과 박스 (낱개)
 function BoxItem(props) {
-  var { rank, num_of_posts, name} = props.searchList;
+  var { rank, num_of_posts, name } = props.searchList;
   var desc = props.searchList.detail.venue_name;
   var img_urls = props.searchList.posts[0].img_urls[0];
-  
+
   return (
     <li className="box_item">
       <a href="http://#" onClick={props.onClick}>
@@ -44,7 +44,15 @@ function RelatedBoxItem(props) {
           </div>
         </div>
         <div className="related_box_txt">
-          <h3 className="related_box_title key_color"><LinesEllipsis text={props.name} maxLine='1' ellipsis='...' trimRight basedOn='letters' /></h3>
+          <h3 className="related_box_title key_color">
+            <LinesEllipsis
+              text={props.name}
+              maxLine="1"
+              ellipsis="..."
+              trimRight
+              basedOn="letters"
+            />
+          </h3>
         </div>
       </a>
     </li>
@@ -69,7 +77,7 @@ function InstaBoxItem(props) {
 
 function Loading(props) {
   return (
-    <div className={'loading '+props.blind} onClick={props.onClick}>
+    <div className={'loading ' + props.blind} onClick={props.onClick}>
       <span className="loading_ico" />
       <br />
       <span>다음 페이지를 불러오고 있습니다.</span>

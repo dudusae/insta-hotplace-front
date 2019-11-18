@@ -10,6 +10,7 @@ class SearchResultNone extends Component {
   };
 
   render() {
+    console.log('render (SearchResultNone)')
     return (
       <div className="main_container fullwidth">
         <main className="main search_result">

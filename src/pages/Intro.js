@@ -4,6 +4,7 @@ import Search from './../containers/Search';
 
 class Intro extends Component {
   render() {
+    console.log('render (Intro)');
     var { query, onChange, inputClear, onClickSgt } = this.props;
     return (
       <div className="intro">
