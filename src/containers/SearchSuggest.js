@@ -3,13 +3,8 @@ import { GetSuggestList } from './../services/GetData';
 import { SuggestList, SuggestBox } from './../components/header/SearchSuggest';
 
 class SearchSuggest extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return (nextProps.blind !== this.props.blind || nextState.fetching !== this.state.fetching);
-  }
-
   constructor(props) {
     super(props);
-    // this.fetching = false;
     this.state = {
       fetching: false,
       suggestList: [],
@@ -18,30 +13,38 @@ class SearchSuggest extends Component {
 
   fetchSearch = async () => {
     this.setState({ fetching: true });
-    // this.fetching = true;
     const sgtListRequest = await GetSuggestList();
     const suggestList = sgtListRequest.data;
     this.setState({
       suggestList,
       fetching: false,
     });
-    // this.fetching = false;
   };
+
+  // Re-render only :
+  // 1) when Suggestbox display state(blind) changes.
+  // 2) or when Suggestlist data loading state(fecthing) changes.
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.blind !== this.props.blind ||
+      nextState.fetching !== this.state.fetching
+    );
+  }
 
   render() {
     if (this.props.blind !== ' blind') {
-      console.log('render (Suggest)');
       var suggestList = this.state.suggestList.map((list, i) => {
         return (
           <SuggestList
             name={list}
             key={i}
             onClick={e => {
-              this.props.autoComp(e, list);
+              this.props.autoComplete(e, list);
             }}
           />
         );
       });
+
       return (
         <SuggestBox
           blind={this.props.blind}
@@ -55,7 +58,6 @@ class SearchSuggest extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount(SearchSuggest)');
     this.fetchSearch();
   }
 }

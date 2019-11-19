@@ -3,14 +3,13 @@ import { SearchSuggest } from './SearchSuggest';
 import { withRouter } from 'react-router-dom';
 
 class SearchResultNone extends Component {
-  autoComp = (e, keyword) => {
+  autoComplete = (e, keyword) => {
     e.preventDefault();
     this.props.history.push(`/search/${keyword}`);
     this.props.onClickSgt(keyword);
   };
 
   render() {
-    console.log('render (SearchResultNone)')
     return (
       <div className="main_container fullwidth">
         <main className="main search_result">
@@ -22,7 +21,7 @@ class SearchResultNone extends Component {
               이런 키워드는 어떠세요?
             </span>
             <SearchSuggest
-            autoComp={this.autoComp}
+            autoComplete={this.autoComplete}
           />
           </div>
         </main>

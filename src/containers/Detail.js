@@ -35,7 +35,6 @@ class Detail extends Component {
     };
   }
 
-  // render()다음 데이터를 호출한다
   componentDidMount() {
     console.log('이거;'+this.props.match.params.name)
     console.log('이거;'+this.props.match.params.query)
@@ -44,7 +43,6 @@ class Detail extends Component {
     // window.addEventListener('scroll', this.nextPage);
   }
 
-  // // 무한스크롤
   // nextPage = () => {
   //   var { scrollHeight, scrollTop, clientHeight } = document.documentElement;
   //   if (scrollHeight === scrollTop + clientHeight) {
@@ -55,8 +53,6 @@ class Detail extends Component {
 
 
   render() {
-
-    // 검색결과가 있으면 로드한 데이터를 12개씩 보여준다
 
     var {detailInfo, fetching} = this.state;
     // var relatedBoxItems = this.state.searchList.map((searchList, i) => {

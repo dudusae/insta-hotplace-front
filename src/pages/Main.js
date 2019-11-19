@@ -12,19 +12,12 @@ function Main(props) {
         query={props.query}
         onChange={props.onChange}
         inputClear={props.inputClear}
-        onClickSgt={props.onClickSgt}
+        pushQueryToInput={props.pushQueryToInput}
       />
-      <Route exact path="/search/:query" render={() => (
-                                          <SearchResult
-                                              keyword={props.query}/>
-        )}
+      <Route exact path="/search/:query" render={() => ( <SearchResult/> )}
       />
-      <Route exact path="/sorry" render={() => (
-                                          <SearchResultNone
-                                              query={props.query}
-                                              onChange={props.onChange}
-                                              inputClear={props.inputClear}
-                                              onClickSgt={props.onClickSgt}/>)} />
+      <Route exact path="/sorry" render={() => ( <SearchResultNone
+                                                     pushQueryToInput={props.pushQueryToInput}/>)} />
       <Route exact path="/search/:query/:name" component={Detail} />
     </Router>
   );

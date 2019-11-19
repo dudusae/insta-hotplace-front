@@ -4,8 +4,7 @@ import Search from './../containers/Search';
 
 class Intro extends Component {
   render() {
-    console.log('render (Intro)');
-    var { query, onChange, inputClear, onClickSgt } = this.props;
+    var { query, onChange, inputClear, pushQueryToInput } = this.props;
     return (
       <div className="intro">
         <Header blind="blind" />
@@ -22,7 +21,7 @@ class Intro extends Component {
               query={query}
               onChange={onChange}
               inputClear={inputClear}
-              onClickSgt={onClickSgt}
+              pushQueryToInput={pushQueryToInput}
             />
             <div className="home_ico"></div>
           </main>

@@ -1,7 +1,6 @@
 import axios from 'axios';
 export function GetSearch(keyword) {
     console.log('https://my-json-server.typicode.com/maykim51/insta-hotplace/' + keyword);
-    // return axios({method:'get', url: `http://52.79.172.38:5000/areas/${keyword}`, responseEncoding: 'utf8'});}
     return axios.get('https://my-json-server.typicode.com/maykim51/insta-hotplace/'+ keyword);}
 
 export function GetSuggestList(keyword) {
