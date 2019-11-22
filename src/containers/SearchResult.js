@@ -25,7 +25,8 @@ class SearchResult extends Component {
       this.setState({ fetching: true });
       try {
         const searchRequest = await GetSearch(keyword);
-        const searchList = searchRequest.data[0].venues;
+        const searchList = searchRequest.data.venues;
+        
         this.setState({
           searchCount: searchList.length,
           searchList,
@@ -52,10 +53,10 @@ class SearchResult extends Component {
   };
 
   // go to Detail page
-  viewDetail = (e, index) => {
+  viewDetail = (e, name) => {
     e.preventDefault();
     this.props.history.push(
-      `/search/${this.props.match.params.query}/${index}`,
+      `/search/${this.props.match.params.query}/${name}`,
     );
   };
 
@@ -82,10 +83,10 @@ class SearchResult extends Component {
             rank={searchList.rank}
             num_of_posts={searchList.num_of_posts}
             name={searchList.name}
-            desc={searchList.desc}
+            desc={searchList.detail.description}
             key={i}
             onClick={e => {
-              this.viewDetail(e, i);
+              this.viewDetail(e, searchList.name);
             }}
           />
         );

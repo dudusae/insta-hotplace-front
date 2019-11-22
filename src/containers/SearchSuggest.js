@@ -14,7 +14,7 @@ class SearchSuggest extends Component {
   fetchSearch = async () => {
     this.setState({ fetching: true });
     const sgtListRequest = await GetSuggestList();
-    const suggestList = sgtListRequest.data;
+    const suggestList = sgtListRequest.data.area_list;
     this.setState({
       suggestList,
       fetching: false,

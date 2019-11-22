@@ -1,47 +1,58 @@
 import React, { Component } from 'react';
 import { Loading, InstaBoxItem } from './../components/BoxItems';
-import { GetDetail, GetSearch, GetInsta } from './../services/GetData';
+import { GetSearch, } from './../services/GetData';
 
 class Detail extends Component {
-  fetchSearch = async (query, name) => {
-    console.log(this.state.detailInfo);
-    this.setState({ fetching: true });
-      const detailRequest = await Promise.all([
-        GetDetail(name),
-        GetInsta(query),
-        GetSearch(query)
-      ]);
-      const detailInfo = detailRequest[0].data;
-      const instaList = detailRequest[1].data;
-      // const searchList = detailRequest[2].data;
-
-      this.setState({
-        detailInfo: detailInfo[0],
-        // searchList,
-        instaList,
-        fetching: false,
-      });
-      console.log(this.state.detailInfo);
-    }
-
   constructor(props) {
     super(props);
+    this._isMounted = false;
     this.state = {
       fetching: false,
-      name: this.props.name,
-      detailInfo: [],
-      // searchList: [],
-      instaList: [],
+      hasError: false,
+      searchCount: null,
+      searchList: [],
+      venueData: [],
+      venueDetail: [],
+      instaList:[],
+      itemsPerPage: 12,
+      loadPage: 1,
+      indexStart: 0,
+      data: null,
     };
   }
 
-  componentDidMount() {
-    console.log('이거;'+this.props.match.params.name)
-    console.log('이거;'+this.props.match.params.query)
-    const {query, name} = this.props.match.params;
-    this.fetchSearch(query, name);
-    // window.addEventListener('scroll', this.nextPage);
-  }
+  // Get Search Result Data
+  fetchSearch = async (keyword, name) => {
+    if (this._ismounted === true) {
+      this.setState({ fetching: true });
+      try {
+        const searchRequest = await GetSearch(keyword);
+        const searchList = searchRequest.data.venues;
+        const index = searchList.findIndex(i => i.name === name);
+        var venueData = [];
+        venueData= searchList[index];
+        // console.log(venueData.detail.description);
+        
+        this.setState({
+          searchCount: searchList.length,
+          searchList,
+          venueData,
+          venueDetail: venueData.detail,
+          instaList: venueData.posts,
+          instaImg: venueData.posts.img_urls,
+          fetching: false,
+        });
+      } catch (e) {
+        console.log(e);
+        this.setState({
+          fetching: false,
+          hasError: true,
+        });
+      } finally {
+        this.setState({ hasError: false });
+      }
+    }
+  };
 
   // nextPage = () => {
   //   var { scrollHeight, scrollTop, clientHeight } = document.documentElement;
@@ -51,10 +62,11 @@ class Detail extends Component {
   // };
 
 
-
   render() {
 
-    var {detailInfo, fetching} = this.state;
+    var {venueData, venueDetail, instaList, fetching} = this.state;
+    console.log(venueDetail.description);
+    // console.log(instaList.img_urls[0]);
     // var relatedBoxItems = this.state.searchList.map((searchList, i) => {
     //   return (
     //     <RelatedBoxItem
@@ -67,13 +79,16 @@ class Detail extends Component {
     //   );
     // });
 
-    var instaBoxItems = this.state.instaList.map((instaList, i) => {
+    var instaBoxItems = instaList.map((instaList, i) => {
+
+      var tags = instaList.hashtags.map((hashtags) => '#' + hashtags + ' ');
+
       return (
         <InstaBoxItem
-          backgroundImage={instaList.backgroundImage}
-          tags={instaList.desc}
+          img_urls={instaList.img_urls[0]}
+          tags={tags}
           key={i}
-          // link={instaList.link}
+          link={instaList.key}
         />
       );
     });
@@ -92,24 +107,40 @@ class Detail extends Component {
               <span className="blind">다음</span>
             </button>
           </div> */}
-          <h1 className="detail_title">{detailInfo.name}</h1>
+          <h1 className="detail_title">{venueData.name}</h1>
           <div className="deatil">
             <div className="detail_map"></div>
             <div className="detail_desc">
               <p className="detail_txt">
-              {detailInfo.desc}
+                {venueDetail.description}
               </p>
               <a className="detail_map_link key_color" href="/#">
                 <p className="detail_txt map_ico">네이버 지도에서 보기</p>
               </a>
             </div>
           </div>
-          <h2 className="insta_count">인스타그램 검색결과 : {this.state.instaList.length}건</h2>
+          <h2 className="insta_count">인스타그램 검색결과 : {instaList.length}건</h2>
           <ul className="box_container">{instaBoxItems}</ul>
           <Loading blind={fetching ? '' : 'blind'} />
         </main>
       </div>
     );
+  }
+
+  componentDidMount() {
+    this._ismounted = true;
+    this.fetchSearch(this.props.match.params.query, this.props.match.params.name);
+    window.addEventListener('scroll', this.viewNextPage);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.match.params.query !== this.props.match.params.query) {
+      this.fetchSearch(this.props.match.params.query);
+    }
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
   }
 }
 
