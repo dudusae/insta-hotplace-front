@@ -9,11 +9,17 @@ class Detail extends Component {
     this.state = {
       fetching: false,
       hasError: false,
-      searchCount: null,
-      searchList: [],
-      venueData: [],
-      venueDetail: [],
-      instaList:[],
+      venueData: {
+        detail: { description : null, 
+                  url_naver_map: null },
+        name: null ,
+        num_of_posts: null ,
+        posts: [
+                  { hashtags:[],
+                  img_urls:[],
+                  key: null }
+        ]
+      },
       itemsPerPage: 12,
       loadPage: 1,
       indexStart: 0,
@@ -25,22 +31,16 @@ class Detail extends Component {
   fetchSearch = async (keyword, name) => {
     if (this._ismounted === true) {
       this.setState({ fetching: true });
+      console.log('얍1');
       try {
         const searchRequest = await GetSearch(keyword);
         const searchList = searchRequest.data.venues;
         const index = searchList.findIndex(i => i.name === name);
-        var venueData = [];
-        venueData= searchList[index];
-        // console.log(venueData.detail.description);
-        
+        var venueData = searchList[index];
         this.setState({
-          searchCount: searchList.length,
-          searchList,
           venueData,
-          venueDetail: venueData.detail,
-          instaList: venueData.posts,
-          instaImg: venueData.posts.img_urls,
           fetching: false,
+          
         });
       } catch (e) {
         console.log(e);
@@ -63,9 +63,9 @@ class Detail extends Component {
 
 
   render() {
-
-    var {venueData, venueDetail, instaList, fetching} = this.state;
-    console.log(venueDetail.description);
+    var {venueData, fetching} = this.state;
+    var venueDetail = venueData.detail;
+    var venuePosts = venueData.posts;
     // console.log(instaList.img_urls[0]);
     // var relatedBoxItems = this.state.searchList.map((searchList, i) => {
     //   return (
@@ -79,20 +79,19 @@ class Detail extends Component {
     //   );
     // });
 
-    var instaBoxItems = instaList.map((instaList, i) => {
+    var instaBoxItems = venuePosts.map((venuePosts, i) => {
 
-      var tags = instaList.hashtags.map((hashtags) => '#' + hashtags + ' ');
-
+      var tags = venuePosts.hashtags.map((hashtags) => '#' + hashtags + ' ');
+      var img_urls = venuePosts.img_urls.map((img_urls) => 'url(' + img_urls + ')');
       return (
         <InstaBoxItem
-          img_urls={instaList.img_urls[0]}
+          img_urls={img_urls}
           tags={tags}
           key={i}
-          link={instaList.key}
+          link={venuePosts.key}
         />
       );
     });
-
     return (
       <div className="main_container fullwidth">
         <main className="main">
@@ -109,17 +108,17 @@ class Detail extends Component {
           </div> */}
           <h1 className="detail_title">{venueData.name}</h1>
           <div className="deatil">
-            <div className="detail_map"></div>
+            <div className="detail_map" style={{ backgroundImage: `url(${venuePosts[0].img_urls[0]})` }}></div>
             <div className="detail_desc">
               <p className="detail_txt">
                 {venueDetail.description}
               </p>
-              <a className="detail_map_link key_color" href="/#">
+              <a className="detail_map_link key_color" href={venueDetail.url_naver_map} target="_naver">
                 <p className="detail_txt map_ico">네이버 지도에서 보기</p>
               </a>
             </div>
           </div>
-          <h2 className="insta_count">인스타그램 검색결과 : {instaList.length}건</h2>
+          <h2 className="insta_count">인스타그램 검색결과 : {venuePosts.length}건</h2>
           <ul className="box_container">{instaBoxItems}</ul>
           <Loading blind={fetching ? '' : 'blind'} />
         </main>

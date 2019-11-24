@@ -1,13 +1,13 @@
 import React from 'react';
 import LinesEllipsis from 'react-lines-ellipsis';
 
-function BoxItem({ onClick, img_urls, rank, num_of_posts, name, desc }) {
+function BoxItem({ onClick, img_urls, rank, num_of_posts, name, desc, onError }) {
   return (
     <li className="box_item">
       <a href="http://#" onClick={onClick}>
         <div
           className="box_img"
-          style={{ backgroundImage: `url(${img_urls})` }}
+          style={{ backgroundImage: `${img_urls}, url(https://images.unsplash.com/photo-1558470570-c9a5a5ade867?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)` }}
         >
           <div className="box_img_overlay"></div>
           <div className="box_rank key_color_bg">
@@ -57,10 +57,10 @@ function RelatedBoxItem({ onClick, img_urls, rank, name }) {
 function InstaBoxItem({ link, img_urls, tags }) {
   return (
     <li className="box_item insta_box_item">
-      <a href={link}>
+      <a href={link} target="_insta">
         <div
           className="insta_box_img"
-          style={{ backgroundImage: `url(${img_urls})` }}
+          style={{ backgroundImage: `${img_urls}, url(https://images.unsplash.com/photo-1558470570-c9a5a5ade867?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)` }}
         ></div>
         <div className="insta_box_txt">
           <p className="insta_box_tags">{tags}</p>

@@ -26,7 +26,6 @@ class SearchResult extends Component {
       try {
         const searchRequest = await GetSearch(keyword);
         const searchList = searchRequest.data.venues;
-        
         this.setState({
           searchCount: searchList.length,
           searchList,
@@ -59,7 +58,6 @@ class SearchResult extends Component {
       `/search/${this.props.match.params.query}/${name}`,
     );
   };
-
   render() {
     var {
       fetching,
@@ -76,10 +74,14 @@ class SearchResult extends Component {
     } else {
       var indexEnd = itemsPerPage * loadPage;
       var searchListSlice = searchList.slice(indexStart, indexEnd);
-      var boxItems = searchListSlice.map((searchList, i) => {
+      var boxItems = 
+      searchListSlice.map((searchList, i) => {
+        var img_urls = searchList.posts[0].img_urls.map((img_urls) => 'url(' + img_urls + ')');
+        // img_urls.push('url(./asset/images/ico_main@2x.png)');
         return (
           <BoxItem
-            img_urls={searchList.posts[0].img_urls[0]}
+            // img_urls={searchList.posts[0].img_urls}
+            img_urls={img_urls}
             rank={searchList.rank}
             num_of_posts={searchList.num_of_posts}
             name={searchList.name}
@@ -90,7 +92,8 @@ class SearchResult extends Component {
             }}
           />
         );
-      });
+        }
+      );
 
       return (
         <div className="main_container fullwidth">

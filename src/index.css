@@ -497,15 +497,14 @@ footer a {
 }
 
 .detail_map {
-  height: 200px;
+  height: 300px;
   flex: 1 360px;
   border-radius: 15px;
-  background-image: url('./asset/images/sample_map.png');
   background-size: cover;
 }
 
 .detail_desc {
-  flex: 2 720px;
+  flex: 2 360px;
   display: block;
 }
 
@@ -548,7 +547,7 @@ footer a {
   padding: 0 10px;
 }
 
-@media (min-width: 320px) and (max-width: 768px) {
+@media (min-width: 481px) and (max-width: 999px) {
   .related_prv {
     display: none;
   }
