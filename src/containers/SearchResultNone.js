@@ -1,16 +1,34 @@
 import React, { Component } from 'react';
 import { SearchSuggest } from './SearchSuggest';
 import { withRouter } from 'react-router-dom';
+import Header from './Header';
 
 class SearchResultNone extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: this.props.match.params.query,
+    };
+  }
+
   autoComplete = (e, keyword) => {
     e.preventDefault();
     this.props.history.push(`/search/${keyword}`);
-    this.props.onClickSgt(keyword);
+    // this.props.onClickSgt(keyword);
   };
+
+  queryHandle = e => {this.setState({ query: e.target.value });};
+  queryClearHandle = () => {this.setState({ query: '' });};
 
   render() {
     return (
+      <div>
+      <Header
+        query={this.state.query}
+        onChange={this.queryHandle}
+        inputClear={this.queryClearHandle}
+        // pushQueryToInput={pushQueryToInput}
+      />
       <div className="main_container fullwidth">
         <main className="main search_result">
           <div className="search_no_msg">
@@ -25,6 +43,7 @@ class SearchResultNone extends Component {
           />
           </div>
         </main>
+      </div>
       </div>
     );
   }

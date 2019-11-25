@@ -6,17 +6,18 @@ import Detail from './../containers/Detail';
 import { Route, BrowserRouter as Router} from 'react-router-dom';
 
 function Main({ query, onChange, inputClear, pushQueryToInput}) {
+  // console.log('쿼리를알수 있나'+match.params.query)
   return (
     <Router>
-      <Header
+      {/* <Header
         query={query}
         onChange={onChange}
         inputClear={inputClear}
         pushQueryToInput={pushQueryToInput}
-      />
+      /> */}
       <Route exact path="/search/:query" render={() => ( <SearchResult/> )}
       />
-      <Route exact path="/sorry" render={() => ( <SearchResultNone
+      <Route exact path="/search/:query/sorry" render={() => ( <SearchResultNone
                                                      pushQueryToInput={pushQueryToInput}/>)} />
       <Route exact path="/search/:query/:name" component={Detail} />
     </Router>

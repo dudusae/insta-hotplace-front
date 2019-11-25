@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Loading, InstaBoxItem } from './../components/BoxItems';
 import { GetSearch, } from './../services/GetData';
+import Header from './Header';
 
 class Detail extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class Detail extends Component {
       loadPage: 1,
       indexStart: 0,
       data: null,
+      query: this.props.match.params.query,
     };
   }
 
@@ -61,6 +63,8 @@ class Detail extends Component {
   //   }
   // };
 
+  queryHandle = e => {this.setState({ query: e.target.value });};
+  queryClearHandle = () => {this.setState({ query: '' });};
 
   render() {
     var {venueData, fetching} = this.state;
@@ -93,6 +97,12 @@ class Detail extends Component {
       );
     });
     return (
+      <div><Header
+      query={this.state.query}
+      onChange={this.queryHandle}
+      inputClear={this.queryClearHandle}
+      // pushQueryToInput={pushQueryToInput}
+    />
       <div className="main_container fullwidth">
         <main className="main">
           {/* <div className="related_box_container">
@@ -122,6 +132,7 @@ class Detail extends Component {
           <ul className="box_container">{instaBoxItems}</ul>
           <Loading blind={fetching ? '' : 'blind'} />
         </main>
+      </div>
       </div>
     );
   }

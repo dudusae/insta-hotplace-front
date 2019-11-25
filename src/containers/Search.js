@@ -25,7 +25,7 @@ class Search extends Component {
   autoComplete = (e, keyword) => {
     console.log('Search > autoComplete');
     this.returnSearch(e, keyword);
-    this.props.pushQueryToInput(keyword);
+    // this.props.pushQueryToInput(keyword);
   };
 
   // Keyword suggest list display : on/off toggle

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import { BoxItem, Loading } from './../components/BoxItems';
 import { GetSearch } from './../services/GetData';
+import Header from './Header';
 
 class SearchResult extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class SearchResult extends Component {
       loadPage: 1,
       indexStart: 0,
       data: null,
+      query: this.props.match.params.query,
     };
   }
 
@@ -58,6 +60,11 @@ class SearchResult extends Component {
       `/search/${this.props.match.params.query}/${name}`,
     );
   };
+
+  queryHandle = e => {this.setState({ query: e.target.value });};
+  queryClearHandle = () => {this.setState({ query: '' });};
+
+
   render() {
     var {
       fetching,
@@ -70,7 +77,8 @@ class SearchResult extends Component {
     } = this.state;
 
     if (hasError) {
-      return <Redirect to="/sorry" />;
+      return <Redirect to={`/search/${this.props.match.params.query}/sorry`} />;
+
     } else {
       var indexEnd = itemsPerPage * loadPage;
       var searchListSlice = searchList.slice(indexStart, indexEnd);
@@ -96,12 +104,21 @@ class SearchResult extends Component {
       );
 
       return (
+        <div>
+          <Header
+        query={this.state.query}
+        onChange={this.queryHandle}
+        inputClear={this.queryClearHandle}
+        // pushQueryToInput={pushQueryToInput}
+      />
+       
         <div className="main_container fullwidth">
           <main className="main search_result">
             <p className="search_count">검색결과 : {searchCount} 건</p>
             <ul className="box_container">{boxItems}</ul>
             <Loading blind={fetching ? '' : 'blind'} />
           </main>
+        </div>
         </div>
       );
     }
