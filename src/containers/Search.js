@@ -13,7 +13,6 @@ class Search extends Component {
   }
 
   returnSearch = (e, keyword) => {
-    console.log('Search > returnSearch');
     if (!keyword) {
       keyword = e.target.firstChild.childNodes[2].lastChild.value;
     }
@@ -22,41 +21,30 @@ class Search extends Component {
     this.props.history.push(`/search/${keyword}`);
   };
 
-  autoComplete = (e, keyword) => {
-    console.log('Search > autoComplete');
-    this.returnSearch(e, keyword);
-    // this.props.pushQueryToInput(keyword);
-  };
-
-  // Keyword suggest list display : on/off toggle
   suggestHandle = e => {
     if (this.suggestHover === false) {
-      console.log('Search > suggestHandle');
       this.setState({ inputFocus: e.type === 'focus' ? true : false });
     }
   };
 
   suggestHoverListen = e => {
-    console.log('Search > suggestHoverListen');
     this.suggestHover = e.type === 'mouseenter' ? true : false;
   };
 
   render() {
     if (this.props.blind !== 'blind') {
-      var { blind, query, onChange, inputClear } = this.props;
+      var { blind, queryURI } = this.props;
 
       return (
         <div className={'search ' + blind}>
           <form onSubmit={this.returnSearch} method="get" autoComplete="off">
             <SearchField
-              query={query}
-              onChange={onChange}
-              inputClear={inputClear}
+              queryURI={queryURI}
               onFocus={this.suggestHandle}
             />
             <SearchSuggest
               blind={this.state.inputFocus ? '' : ' blind'}
-              autoComplete={this.autoComplete}
+              autoComplete={this.returnSearch}
               onMouse={this.suggestHoverListen}
             />
           </form>

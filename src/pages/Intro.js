@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './../containers/Header';
 import Search from './../containers/Search';
 
-function Intro ({ query, onChange, inputClear, pushQueryToInput }) {
+function Intro () {
     return (
       <div className="intro">
         <Header blind="blind" />
@@ -15,12 +15,7 @@ function Intro ({ query, onChange, inputClear, pushQueryToInput }) {
               </span>
               <span className="key_color">핫한</span> 맛집은?
             </h1>
-            <Search
-              query={query}
-              onChange={onChange}
-              inputClear={inputClear}
-              pushQueryToInput={pushQueryToInput}
-            />
+            <Search/>
             <div className="home_ico"></div>
           </main>
         </div>

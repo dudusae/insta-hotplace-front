@@ -17,7 +17,6 @@ class SearchResult extends Component {
       loadPage: 1,
       indexStart: 0,
       data: null,
-      query: this.props.match.params.query,
     };
   }
 
@@ -61,9 +60,6 @@ class SearchResult extends Component {
     );
   };
 
-  queryHandle = e => {this.setState({ query: e.target.value });};
-  queryClearHandle = () => {this.setState({ query: '' });};
-
 
   render() {
     var {
@@ -106,10 +102,7 @@ class SearchResult extends Component {
       return (
         <div>
           <Header
-        query={this.state.query}
-        onChange={this.queryHandle}
-        inputClear={this.queryClearHandle}
-        // pushQueryToInput={pushQueryToInput}
+        queryURI={this.props.match.params.query}
       />
        
         <div className="main_container fullwidth">

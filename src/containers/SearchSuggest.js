@@ -38,7 +38,7 @@ class SearchSuggest extends Component {
           <SuggestList
             name={list}
             key={i}
-            onClick={e => {
+            onClick={(e) => {
               this.props.autoComplete(e, list);
             }}
           />

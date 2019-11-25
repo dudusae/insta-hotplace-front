@@ -4,30 +4,17 @@ import { withRouter } from 'react-router-dom';
 import Header from './Header';
 
 class SearchResultNone extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: this.props.match.params.query,
-    };
-  }
 
   autoComplete = (e, keyword) => {
     e.preventDefault();
     this.props.history.push(`/search/${keyword}`);
-    // this.props.onClickSgt(keyword);
   };
-
-  queryHandle = e => {this.setState({ query: e.target.value });};
-  queryClearHandle = () => {this.setState({ query: '' });};
 
   render() {
     return (
       <div>
       <Header
-        query={this.state.query}
-        onChange={this.queryHandle}
-        inputClear={this.queryClearHandle}
-        // pushQueryToInput={pushQueryToInput}
+        queryURI={this.props.match.params.query}
       />
       <div className="main_container fullwidth">
         <main className="main search_result">

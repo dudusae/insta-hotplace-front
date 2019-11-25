@@ -26,4 +26,5 @@ function SuggestBox({ blind, onMouse, suggestList }) {
   );
 }
 
+
 export { SuggestList, SuggestBox };

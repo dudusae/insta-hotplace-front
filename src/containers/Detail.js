@@ -25,7 +25,6 @@ class Detail extends Component {
       loadPage: 1,
       indexStart: 0,
       data: null,
-      query: this.props.match.params.query,
     };
   }
 
@@ -63,9 +62,6 @@ class Detail extends Component {
   //   }
   // };
 
-  queryHandle = e => {this.setState({ query: e.target.value });};
-  queryClearHandle = () => {this.setState({ query: '' });};
-
   render() {
     var {venueData, fetching} = this.state;
     var venueDetail = venueData.detail;
@@ -85,8 +81,16 @@ class Detail extends Component {
 
     var instaBoxItems = venuePosts.map((venuePosts, i) => {
 
+      // Hashtags : Add '#' and Remove a same tag as venue's name
       var tags = venuePosts.hashtags.map((hashtags) => '#' + hashtags + ' ');
+      var tagIdx = tags.indexOf('#'+venueData.name+' ');
+      if (tagIdx > -1 ) {
+        tags.splice(tagIdx, 1);
+      }
+
+      // InstaImage
       var img_urls = venuePosts.img_urls.map((img_urls) => 'url(' + img_urls + ')');
+      
       return (
         <InstaBoxItem
           img_urls={img_urls}
@@ -98,10 +102,7 @@ class Detail extends Component {
     });
     return (
       <div><Header
-      query={this.state.query}
-      onChange={this.queryHandle}
-      inputClear={this.queryClearHandle}
-      // pushQueryToInput={pushQueryToInput}
+      queryURI={this.props.match.params.query}
     />
       <div className="main_container fullwidth">
         <main className="main">
