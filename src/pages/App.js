@@ -3,18 +3,71 @@ import Intro from './Intro';
 import Main from './Main';
 import Footer from './../components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Store from './../store';
+import { GetSuggestList } from './../services/GetData';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.fetchSearchState = (_searchList, _searchCount) => {
+      console.log('서치 작동하낭: ');
+      this.setState({
+        searchList: _searchList,
+        searchCount : _searchCount,
+      })
+    };
+    this.state = {
+      fetching: false,
+      suggestList: [],
+      searchList: [
+        {
+          detail: { area_name: null,
+                    description : null, 
+                    url_naver_map: null },
+          name: null ,
+          num_of_posts: null ,
+          posts: [
+                    { hashtags:[],
+                    img_urls:[],
+                    key: null }
+          ]
+        },
+      ],
+      searchCount: null,
+      fetchSearchState: this.fetchSearchState,
+    };
+  }
+
+  fetchSuggestList = async () => {
+    this.setState({ fetching: true });
+    const sgtListRequest = await GetSuggestList();
+    const suggestList = sgtListRequest.data.area_list;
+    this.setState({
+      suggestList,
+      fetching: false,
+    });
+  };
+
+
+
   render() {
+    console.log('서치 들어왔는지: '+this.state.searchList);
     return (
       <div className="fullheight">
         <Router>
-          <Route exact path="/" component={Intro}/>
-          <Route path="/search/" component={Main}/>
+          <Store.Provider value={this.state}>
+            <Route exact path="/" component={Intro} />
+            <Route path="/search/" component={Main} />
+          </Store.Provider>
         </Router>
+
         <Footer />
       </div>
     );
+  }
+
+  componentDidMount() {
+    this.fetchSuggestList();
   }
 }
 

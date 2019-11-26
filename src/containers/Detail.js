@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Loading, InstaBoxItem } from './../components/BoxItems';
 import { GetSearch, } from './../services/GetData';
 import Header from './Header';
+import Store from './../store';
 
 class Detail extends Component {
   constructor(props) {
@@ -34,8 +35,9 @@ class Detail extends Component {
       this.setState({ fetching: true });
       console.log('얍1');
       try {
-        const searchRequest = await GetSearch(keyword);
-        const searchList = searchRequest.data.venues;
+        // const searchRequest = await GetSearch(keyword);
+        // const searchList = searchRequest.data.venues;
+        const searchList = this.context.searchList;
         const index = searchList.findIndex(i => i.name === name);
         var venueData = searchList[index];
         this.setState({
@@ -155,4 +157,5 @@ class Detail extends Component {
   }
 }
 
+Detail.contextType = Store;
 export default Detail;

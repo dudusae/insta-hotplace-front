@@ -3,6 +3,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 import { BoxItem, Loading } from './../components/BoxItems';
 import { GetSearch } from './../services/GetData';
 import Header from './Header';
+import Store from './../store';
 
 class SearchResult extends Component {
   constructor(props) {
@@ -11,8 +12,6 @@ class SearchResult extends Component {
     this.state = {
       fetching: false,
       hasError: false,
-      searchCount: null,
-      searchList: [],
       itemsPerPage: 12,
       loadPage: 1,
       indexStart: 0,
@@ -28,10 +27,10 @@ class SearchResult extends Component {
         const searchRequest = await GetSearch(keyword);
         const searchList = searchRequest.data.venues;
         this.setState({
-          searchCount: searchList.length,
-          searchList,
           fetching: false,
         });
+        // Set Data on Store
+        this.context.fetchSearchState(searchList, searchList.length);
       } catch (e) {
         console.log(e);
         this.setState({
@@ -55,36 +54,28 @@ class SearchResult extends Component {
   // go to Detail page
   viewDetail = (e, name) => {
     e.preventDefault();
-    this.props.history.push(
-      `/search/${this.props.match.params.query}/${name}`,
-    );
+    this.props.history.push(`/search/${this.props.match.params.query}/${name}`);
   };
 
-
   render() {
-    var {
-      fetching,
-      hasError,
-      searchCount,
-      searchList,
-      itemsPerPage,
-      loadPage,
-      indexStart,
-    } = this.state;
+    console.log('레더' + this.context.searchList);
+    var { fetching, hasError, itemsPerPage, loadPage, indexStart } = this.state;
+    var { searchList, searchCount } = this.context;
+
 
     if (hasError) {
       return <Redirect to={`/search/${this.props.match.params.query}/sorry`} />;
-
     } else {
       var indexEnd = itemsPerPage * loadPage;
       var searchListSlice = searchList.slice(indexStart, indexEnd);
-      var boxItems = 
-      searchListSlice.map((searchList, i) => {
-        var img_urls = searchList.posts[0].img_urls.map((img_urls) => 'url(' + img_urls + ')');
-        // img_urls.push('url(./asset/images/ico_main@2x.png)');
+
+      var boxItems = searchListSlice.map((searchList, i) => {
+        //View Thumbnail Image with one of 1st insta-post's
+        var img_urls = searchList.posts[0].img_urls.map(
+          img_urls => 'url(' + img_urls + ')',
+        );
         return (
           <BoxItem
-            // img_urls={searchList.posts[0].img_urls}
             img_urls={img_urls}
             rank={searchList.rank}
             num_of_posts={searchList.num_of_posts}
@@ -96,22 +87,18 @@ class SearchResult extends Component {
             }}
           />
         );
-        }
-      );
+      });
 
       return (
         <div>
-          <Header
-        queryURI={this.props.match.params.query}
-      />
-       
-        <div className="main_container fullwidth">
-          <main className="main search_result">
-            <p className="search_count">검색결과 : {searchCount} 건</p>
-            <ul className="box_container">{boxItems}</ul>
-            <Loading blind={fetching ? '' : 'blind'} />
-          </main>
-        </div>
+          <Header queryURI={this.props.match.params.query} />
+          <div className="main_container fullwidth">
+            <main className="main search_result">
+              <p className="search_count">검색결과 : {searchCount} 건</p>
+              <ul className="box_container">{boxItems}</ul>
+              <Loading blind={fetching ? '' : 'blind'} />
+            </main>
+          </div>
         </div>
       );
     }
@@ -119,13 +106,24 @@ class SearchResult extends Component {
 
   componentDidMount() {
     this._ismounted = true;
-    this.fetchSearch(this.props.match.params.query);
+
+    // Prevent Reload when browser to go back to previous page
+    const queryStore = this.context.searchList[0].detail.area_name;
+    const queryURI = this.props.match.params.query;
+    if (queryStore !== queryURI) {
+      this.fetchSearch(queryURI);
+    }
+
     window.addEventListener('scroll', this.viewNextPage);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.match.params.query !== this.props.match.params.query) {
-      this.fetchSearch(this.props.match.params.query);
+
+    // Update only when Query in URI is replaced
+    const queryURI = this.props.match.params.query;
+    const prevqueryURI = prevProps.match.params.query
+    if (prevqueryURI !== queryURI) {
+      this.fetchSearch(queryURI);
     }
   }
 
@@ -134,4 +132,5 @@ class SearchResult extends Component {
   }
 }
 
+SearchResult.contextType = Store;
 export default withRouter(SearchResult);
