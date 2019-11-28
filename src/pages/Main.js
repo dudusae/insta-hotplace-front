@@ -5,7 +5,6 @@ import Detail from './../containers/Detail';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 function Main() {
-  console.log('Main');
   return (
     <Router>
       <Switch>

@@ -19,9 +19,8 @@ class Search extends Component {
     
     e.preventDefault();
     this.setState({ inputFocus: false });
-    console.log('returnSearch > inputFocus:false')
+    this.suggestHover = (e.type === 'mouseenter' ? true : false)
     this.props.history.push(`/search/${keyword}`);
-    console.log('returnSearch > pushHistory')
   };
 
   suggestHandle = e => {
@@ -31,13 +30,12 @@ class Search extends Component {
   };
 
   suggestHoverListen = e => {
-    this.suggestHover = e.type === 'mouseenter' ? true : false;
+    this.suggestHover = (e.type === 'mouseenter' ? true : false)
   };
 
   render() {
     if (this.props.blind !== 'blind') {
       var { blind, queryURI } = this.props;
-
       return (
         <div className={'search ' + blind}>
           <form onSubmit={this.returnSearch} method="get" autoComplete="off">

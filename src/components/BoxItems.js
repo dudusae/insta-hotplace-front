@@ -34,7 +34,7 @@ function RelatedBoxItem({ onClick, img_urls, rank, name }) {
       <a href="/#" onClick={onClick}>
         <div
           className="related_box_img"
-          style={{ backgroundImage: `url(${img_urls})` }}
+          style={{ backgroundImage: `${img_urls}, url(${box_bg})` }}
         >
           <div className="related_box_rank">
             <span className="related_box_rank_num">{rank}</span>

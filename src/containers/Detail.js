@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Loading, InstaBoxItem } from './../components/BoxItems';
+import {
+  Loading,
+  InstaBoxItem,
+  // RelatedBoxItem,
+} from './../components/BoxItems';
 import { withRouter, Redirect } from 'react-router-dom';
 import Header from './Header';
 import Store from './../store';
@@ -31,9 +35,7 @@ class Detail extends Component {
         // Set Data on Store
         this.context.fetchSearchState(searchList, searchList.length);
       } catch (e) {
-        console.log(e);
         this.setState({
-
           fetching: false,
           hasError: true,
         });
@@ -43,7 +45,8 @@ class Detail extends Component {
     }
   };
 
-  nextPage = () => {
+  // Infinite scroll
+  viewNextPage = () => {
     var { scrollHeight, scrollTop, clientHeight } = document.documentElement;
     if (scrollHeight === scrollTop + clientHeight) {
       this.setState({ loadPage: this.state.loadPage + 1 });
@@ -51,8 +54,6 @@ class Detail extends Component {
   };
 
   render() {
-    console.log('Detail')
-    document.documentElement.scrollTop = 0;
     var { fetching, hasError, itemsPerPage, loadPage, indexStart } = this.state;
     const { searchList } = this.context;
     const name = this.props.match.params.name;
@@ -63,19 +64,6 @@ class Detail extends Component {
       const venueData = searchList[index];
       const venueDetail = venueData.detail;
       const venuePosts = venueData.posts;
-
-      // // console.log(instaList.img_urls[0]);
-      // // var relatedBoxItems = this.state.searchList.map((searchList, i) => {
-      // //   return (
-      // //     <RelatedBoxItem
-      // //       rank={searchList.rank}
-      // //       name={searchList.name}
-      // //       backgroundImage={searchList.backgroundImage}
-      // //       key={i}
-      // //       onClick={this.props.onClick}
-      // //     />
-      // //   );
-      // // });
 
       var indexEnd = itemsPerPage * loadPage;
       var venuePostsSlice = venuePosts.slice(indexStart, indexEnd);
@@ -102,22 +90,46 @@ class Detail extends Component {
           />
         );
       });
+
+      // const itemsPerPageLV = 9;
+      // var indexEndLV = itemsPerPageLV + index;
+      // var relatedSlice = searchList.slice(index, indexEndLV);
+
+      // var relatedBoxItems = relatedSlice.map((searchList, i) => {
+      //   var img_urls = searchList.posts[0].img_urls.map(
+      //     img_urls => 'url(' + img_urls + ')',
+      //   );
+      //   return (
+      //     <RelatedBoxItem
+      //       rank={searchList.rank}
+      //       name={searchList.name}
+      //       img_urls={img_urls}
+      //       key={i}
+      //       onClick={e => {
+      //         this.viewDetail(e, searchList.name);
+      //       }}
+      //     />
+      //   );
+      // });
+
       return (
         <div>
           <Header queryURI={this.props.match.params.query} />
           <div className="main_container fullwidth">
             <main className="main">
               {/* <div className="related_box_container">
-            <button className="related_prv">
-              <span className="blind">이전</span>
-            </button>
-            <div className="related_box_list_wrap">
-              <ul className="related_box_list">{relatedBoxItems}</ul>
-            </div>
-            <button className="related_nxt">
-              <span className="blind">다음</span>
-            </button>
-          </div> */}
+                <button className="related_prv">
+                  <span className="blind">이전</span>
+                </button>
+                <div className="related_box_list_wrap">
+                  <ul className="related_box_list">
+                    {relatedBoxItems}
+                  </ul>
+                </div>
+                <button className="related_nxt">
+                  <span className="blind">다음</span>
+                </button>
+              </div> */}
               <h1 className="detail_title">{venueData.name}</h1>
               <div className="deatil">
                 <div
@@ -150,7 +162,7 @@ class Detail extends Component {
   }
 
   componentDidMount() {
-    console.log('Detail>DidMount')
+    document.documentElement.scrollTop = 0;
     const queryStore = this.context.searchList[0].detail.area_name;
     const queryURI = this.props.match.params.query;
     if (queryStore !== queryURI) {

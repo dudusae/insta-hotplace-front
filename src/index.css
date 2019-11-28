@@ -380,8 +380,7 @@ footer a {
   flex-wrap: wrap;
   justify-content: space-between;
   height: 140px;
-  background-color: #FFEDF0;
-  margin: -12px;
+  margin: 40px 0;
 }
 
 .related_prv,
@@ -404,14 +403,17 @@ footer a {
   width: 90vw;
   flex: 1 1;
   margin: 0 12px;
+
 }
 
 .related_box_list {
   flex: 1 1;
-  width: 1600px;
+  width: 100%;
   margin: 0px;
   height: 130px;
   overflow-wrap: unset;
+  display: flex;
+  justify-content: space-between;
 }
 
 .related_box_item {

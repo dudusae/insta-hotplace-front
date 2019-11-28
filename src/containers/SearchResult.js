@@ -15,7 +15,6 @@ class SearchResult extends Component {
       itemsPerPage: 12,
       loadPage: 1,
       indexStart: 0,
-      data: null,
     };
   }
 
@@ -57,6 +56,7 @@ class SearchResult extends Component {
   };
 
   render() {
+    
     var { fetching, hasError, itemsPerPage, loadPage, indexStart } = this.state;
     var { searchList, searchCount } = this.context;
 

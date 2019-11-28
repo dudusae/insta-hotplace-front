@@ -17,7 +17,6 @@ class App extends Component {
       })
     };
     this.state = {
-      fetching: false,
       suggestList: [],
       searchList: [
         {
@@ -49,7 +48,6 @@ class App extends Component {
   };
 
   render() {
-    console.log('App');
     return (
       <div className="fullheight">
         <Router>
