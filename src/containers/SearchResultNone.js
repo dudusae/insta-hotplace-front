@@ -11,6 +11,7 @@ class SearchResultNone extends Component {
   };
 
   render() {
+    console.log('SearchResultNone검색결과없음');
     return (
       <div>
       <Header

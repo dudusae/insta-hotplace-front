@@ -7,10 +7,10 @@ import Store from './../store';
 import { GetSuggestList } from './../services/GetData';
 
 class App extends Component {
+
   constructor(props) {
     super(props);
     this.fetchSearchState = (_searchList, _searchCount) => {
-      console.log('서치 작동하낭: ');
       this.setState({
         searchList: _searchList,
         searchCount : _searchCount,
@@ -48,10 +48,8 @@ class App extends Component {
     });
   };
 
-
-
   render() {
-    console.log('서치 들어왔는지: '+this.state.searchList);
+    console.log('App');
     return (
       <div className="fullheight">
         <Router>

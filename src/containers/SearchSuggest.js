@@ -21,7 +21,6 @@ return suggestList
   render() {
     if (this.props.blind !== ' blind') {
       return (
-        <React.Fragment>
         <Store.Consumer>
           {store => 
           (<SuggestBox
@@ -30,7 +29,6 @@ return suggestList
           suggestList={this.getSuggestList(store.suggestList)}
         />)}
         </Store.Consumer>
-        </React.Fragment>
         
       );
     } else {

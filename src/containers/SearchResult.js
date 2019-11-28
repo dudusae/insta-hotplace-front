@@ -32,7 +32,6 @@ class SearchResult extends Component {
         // Set Data on Store
         this.context.fetchSearchState(searchList, searchList.length);
       } catch (e) {
-        console.log(e);
         this.setState({
           fetching: false,
           hasError: true,
@@ -58,7 +57,6 @@ class SearchResult extends Component {
   };
 
   render() {
-    console.log('레더' + this.context.searchList);
     var { fetching, hasError, itemsPerPage, loadPage, indexStart } = this.state;
     var { searchList, searchCount } = this.context;
 
@@ -105,12 +103,12 @@ class SearchResult extends Component {
   }
 
   componentDidMount() {
-    this._ismounted = true;
 
     // Prevent Reload when browser to go back to previous page
     const queryStore = this.context.searchList[0].detail.area_name;
     const queryURI = this.props.match.params.query;
     if (queryStore !== queryURI) {
+      this._ismounted = true;
       this.fetchSearch(queryURI);
     }
 
