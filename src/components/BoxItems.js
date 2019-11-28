@@ -65,7 +65,7 @@ function InstaBoxItem({ link, img_urls, tags }) {
           style={{ backgroundImage: `${img_urls}, url(${insta_box_bg})` }}
         ></div>
         <div className="insta_box_txt">
-          <LinesEllipsis className="insta_box_tags" text={tags} maxLine="6" ellipsis="..." trimRight basedOn="letters"/>
+          <LinesEllipsis className="insta_box_tags" text={tags} maxLine="5" ellipsis="..." trimRight basedOn="letters"/>
         </div>
       </a>
     </li>

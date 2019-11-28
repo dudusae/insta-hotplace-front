@@ -16,9 +16,12 @@ class Search extends Component {
     if (!keyword) {
       keyword = e.target.firstChild.childNodes[2].lastChild.value;
     }
+    
     e.preventDefault();
     this.setState({ inputFocus: false });
+    console.log('returnSearch > inputFocus:false')
     this.props.history.push(`/search/${keyword}`);
+    console.log('returnSearch > pushHistory')
   };
 
   suggestHandle = e => {

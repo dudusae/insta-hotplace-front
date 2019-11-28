@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Loading, InstaBoxItem } from './../components/BoxItems';
+import { withRouter, Redirect } from 'react-router-dom';
 import Header from './Header';
 import Store from './../store';
 import { GetSearch } from './../services/GetData';
@@ -11,47 +12,13 @@ class Detail extends Component {
     this.state = {
       fetching: false,
       hasError: false,
-      venueData: {
-        detail: { description: null, url_naver_map: null },
-        name: null,
-        num_of_posts: null,
-        posts: [{ hashtags: [], img_urls: [], key: null }],
-      },
       itemsPerPage: 12,
       loadPage: 1,
       indexStart: 0,
-      data: null,
     };
   }
 
-  // Get Search Result Data
-  // fetchSearch = async (keyword, name) => {
-  //   if (this._ismounted === true) {
-  //     this.setState({ fetching: true });
-  //     console.log('얍1');
-  //     try {
-  //       const searchList = this.context.searchList;
-  //       const index = searchList.findIndex(i => i.name === name);
-  //       var venueData = searchList[index];
-  //       console.log('venueData SetState')
-  //       this.setState({
-  //         venueData,
-  //         fetching: false,
-
-  //       });
-  //     } catch (e) {
-  //       console.log(e);
-  //       this.setState({
-  //         fetching: false,
-  //         hasError: true,
-  //       });
-  //     } finally {
-  //       this.setState({ hasError: false });
-  //     }
-  //   }
-  // };
-
-  // Get Search Result Data
+  // Get Search Result Data (if direct URI request)
   fetchSearch = async keyword => {
     if (this._ismounted === true) {
       this.setState({ fetching: true });
@@ -64,7 +31,9 @@ class Detail extends Component {
         // Set Data on Store
         this.context.fetchSearchState(searchList, searchList.length);
       } catch (e) {
+        console.log(e);
         this.setState({
+
           fetching: false,
           hasError: true,
         });
@@ -74,20 +43,23 @@ class Detail extends Component {
     }
   };
 
-  // nextPage = () => {
-  //   var { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-  //   if (scrollHeight === scrollTop + clientHeight) {
-  //     this.setState({ loadPage: this.state.loadPage + 1 });
-  //   }
-  // };
+  nextPage = () => {
+    var { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+    if (scrollHeight === scrollTop + clientHeight) {
+      this.setState({ loadPage: this.state.loadPage + 1 });
+    }
+  };
 
   render() {
-    var { fetching } = this.state;
+    console.log('Detail')
+    document.documentElement.scrollTop = 0;
+    var { fetching, hasError, itemsPerPage, loadPage, indexStart } = this.state;
     const { searchList } = this.context;
     const name = this.props.match.params.name;
     const index = searchList.findIndex(i => i.name === name);
-
-    if (searchList[index]) {
+    if (hasError) {
+      return <Redirect to={`/search/${this.props.match.params.query}/sorry`} />;
+    } else if (searchList[index]) {
       const venueData = searchList[index];
       const venueDetail = venueData.detail;
       const venuePosts = venueData.posts;
@@ -105,7 +77,10 @@ class Detail extends Component {
       // //   );
       // // });
 
-      var instaBoxItems = venuePosts.map((venuePosts, i) => {
+      var indexEnd = itemsPerPage * loadPage;
+      var venuePostsSlice = venuePosts.slice(indexStart, indexEnd);
+
+      var instaBoxItems = venuePostsSlice.map((venuePosts, i) => {
         // Hashtags : Add '#' and Remove a same tag as venue's name
         var tags = venuePosts.hashtags.map(hashtags => '#' + hashtags + ' ');
         var tagIdx = tags.indexOf('#' + venueData.name + ' ');
@@ -173,11 +148,9 @@ class Detail extends Component {
       );
     } else return null;
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.props.match.params.name;
-  }
 
   componentDidMount() {
+    console.log('Detail>DidMount')
     const queryStore = this.context.searchList[0].detail.area_name;
     const queryURI = this.props.match.params.query;
     if (queryStore !== queryURI) {
@@ -199,4 +172,4 @@ class Detail extends Component {
 }
 
 Detail.contextType = Store;
-export default Detail;
+export default withRouter(Detail);
