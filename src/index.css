@@ -506,6 +506,7 @@ footer a {
   flex: 1 360px;
   border-radius: 15px;
   background-size: cover;
+  background-position: center center;
 }
 
 .detail_desc {

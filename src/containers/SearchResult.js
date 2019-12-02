@@ -43,7 +43,7 @@ class SearchResult extends Component {
 
   // Infinite scroll
   viewNextPage = () => {
-    var { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+    const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
     if (scrollHeight === scrollTop + clientHeight) {
       this.setState({ loadPage: this.state.loadPage + 1 });
     }
@@ -57,19 +57,19 @@ class SearchResult extends Component {
 
   render() {
     
-    var { fetching, hasError, itemsPerPage, loadPage, indexStart } = this.state;
-    var { searchList, searchCount } = this.context;
+    const { fetching, hasError, itemsPerPage, loadPage, indexStart } = this.state;
+    const { searchList, searchCount } = this.context;
 
 
     if (hasError) {
       return <Redirect to={`/search/${this.props.match.params.query}/sorry`} />;
     } else {
-      var indexEnd = itemsPerPage * loadPage;
-      var searchListSlice = searchList.slice(indexStart, indexEnd);
+      const indexEnd = itemsPerPage * loadPage;
+      const searchListSlice = searchList.slice(indexStart, indexEnd);
 
-      var boxItems = searchListSlice.map((searchList, i) => {
+      const boxItems = searchListSlice.map((searchList, i) => {
         //View Thumbnail Image with one of 1st insta-post's
-        var img_urls = searchList.posts[0].img_urls.map(
+        const img_urls = searchList.posts[0].img_urls.map(
           img_urls => 'url(' + img_urls + ')',
         );
         return (
@@ -103,7 +103,7 @@ class SearchResult extends Component {
   }
 
   componentDidMount() {
-
+    document.documentElement.scrollTop = 0;
     // Prevent Reload when browser to go back to previous page
     const queryStore = this.context.searchList[0].detail.area_name;
     const queryURI = this.props.match.params.query;
@@ -111,16 +111,21 @@ class SearchResult extends Component {
       this._ismounted = true;
       this.fetchSearch(queryURI);
     }
-
     window.addEventListener('scroll', this.viewNextPage);
   }
 
   componentDidUpdate(prevProps, prevState) {
 
+
     // Update only when Query in URI is replaced
     const queryURI = this.props.match.params.query;
     const prevqueryURI = prevProps.match.params.query
+
+    console.log('queryURI: '+queryURI);
+    console.log('prevqueryURI: '+prevqueryURI);
+
     if (prevqueryURI !== queryURI) {
+      this._ismounted = true;      
       this.fetchSearch(queryURI);
     }
   }

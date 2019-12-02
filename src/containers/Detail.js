@@ -8,6 +8,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 import Header from './Header';
 import Store from './../store';
 import { GetSearch } from './../services/GetData';
+import box_bg from './../asset/images/box-item-bg.png';
 
 class Detail extends Component {
   constructor(props) {
@@ -47,14 +48,20 @@ class Detail extends Component {
 
   // Infinite scroll
   viewNextPage = () => {
-    var { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+    const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
     if (scrollHeight === scrollTop + clientHeight) {
       this.setState({ loadPage: this.state.loadPage + 1 });
     }
   };
 
   render() {
-    var { fetching, hasError, itemsPerPage, loadPage, indexStart } = this.state;
+    const {
+      fetching,
+      hasError,
+      itemsPerPage,
+      loadPage,
+      indexStart,
+    } = this.state;
     const { searchList } = this.context;
     const name = this.props.match.params.name;
     const index = searchList.findIndex(i => i.name === name);
@@ -63,27 +70,41 @@ class Detail extends Component {
     } else if (searchList[index]) {
       const venueData = searchList[index];
       const venueDetail = venueData.detail;
-      const venuePosts = venueData.posts;
+      var venuePosts = venueData.posts;
 
-      var indexEnd = itemsPerPage * loadPage;
-      var venuePostsSlice = venuePosts.slice(indexStart, indexEnd);
+      // // Remove duplicated posts
+      // const UniqueKeys = [
+      //   ...new Set(venuePosts.map(venuePosts => venuePosts.key)),
+      // ];
+      // var tempVenuePosts = [];
+      // for (var i in UniqueKeys) {
+      //   var uniqueIndex = venuePosts.findIndex(
+      //     idx => idx.key === UniqueKeys[i]
+      //   );
+      //   tempVenuePosts.push(venuePosts[uniqueIndex]);
+      // }
+      // venuePosts = tempVenuePosts;
 
-      var instaBoxItems = venuePostsSlice.map((venuePosts, i) => {
+      // Pagenation
+      const indexEnd = itemsPerPage * loadPage;
+      const venuePostsSlice = venuePosts.slice(indexStart, indexEnd);
+
+      const instaBoxItems = venuePostsSlice.map((venuePosts, i) => {
         // Hashtags : Add '#' and Remove a same tag as venue's name
-        var tags = venuePosts.hashtags.map(hashtags => '#' + hashtags + ' ');
-        var tagIdx = tags.indexOf('#' + venueData.name + ' ');
+        const tags = venuePosts.hashtags.map(hashtags => '#' + hashtags + ' ');
+        const tagIdx = tags.indexOf('#' + venueData.name + ' ');
         if (tagIdx > -1) {
           tags.splice(tagIdx, 1);
         }
 
         // InstaImage
-        var img_urls = venuePosts.img_urls.map(
+        const insta_img_urls = venuePosts.img_urls.map(
           img_urls => 'url(' + img_urls + ')',
         );
 
         return (
           <InstaBoxItem
-            img_urls={img_urls}
+            img_urls={insta_img_urls}
             tags={tags}
             key={i}
             link={venuePosts.key}
@@ -91,12 +112,15 @@ class Detail extends Component {
         );
       });
 
-      // const itemsPerPageLV = 9;
-      // var indexEndLV = itemsPerPageLV + index;
-      // var relatedSlice = searchList.slice(index, indexEndLV);
+      // console.log ('야'+instaBoxItems[0].props);
+      // const instaBoxItemsUnique = [...new Set(instaBoxItems)];
 
-      // var relatedBoxItems = relatedSlice.map((searchList, i) => {
-      //   var img_urls = searchList.posts[0].img_urls.map(
+      // const itemsPerPageLV = 9;
+      // const indexEndLV = itemsPerPageLV + index;
+      // const relatedSlice = searchList.slice(index, indexEndLV);
+
+      // const relatedBoxItems = relatedSlice.map((searchList, i) => {
+      //   const img_urls = searchList.posts[0].img_urls.map(
       //     img_urls => 'url(' + img_urls + ')',
       //   );
       //   return (
@@ -111,6 +135,10 @@ class Detail extends Component {
       //     />
       //   );
       // });
+
+      const img_urls = venuePosts[0].img_urls.map(
+        img_urls => 'url(' + img_urls + ')',
+      );
 
       return (
         <div>
@@ -134,9 +162,7 @@ class Detail extends Component {
               <div className="deatil">
                 <div
                   className="detail_map"
-                  style={{
-                    backgroundImage: `url(${venuePosts[0].img_urls[0]})`,
-                  }}
+                  style={{ backgroundImage: `${img_urls}, url(${box_bg})` }}
                 ></div>
                 <div className="detail_desc">
                   <p className="detail_txt">{venueDetail.description}</p>
